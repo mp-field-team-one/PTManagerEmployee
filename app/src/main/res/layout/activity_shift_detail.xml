@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/shift_root"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingBottom="28dp">
+
+        <TextView
+            android:id="@+id/btn_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="‹ 뒤로"
+            android:textColor="@color/text_hint"
+            android:textSize="13sp"
+            android:paddingVertical="14dp"
+            android:paddingEnd="14dp"
+            android:background="?attr/selectableItemBackground" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="12월 3일 (수)"
+            android:textColor="@color/text_primary"
+            android:textSize="20sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:text="14:00 – 18:00"
+            android:textColor="@color/brand_blue"
+            android:textSize="26sp"
+            android:textStyle="bold" />
+
+        <!-- detail rows -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <LinearLayout style="@style/DetailRow">
+                <TextView style="@style/DetailKey" android:text="근무지" />
+                <TextView style="@style/DetailVal" android:text="강남점" />
+            </LinearLayout>
+
+            <View style="@style/DetailDivider" />
+
+            <LinearLayout style="@style/DetailRow">
+                <TextView style="@style/DetailKey" android:text="포지션" />
+                <TextView style="@style/DetailVal" android:text="홀 서빙" />
+            </LinearLayout>
+
+            <View style="@style/DetailDivider" />
+
+            <LinearLayout style="@style/DetailRow">
+                <TextView style="@style/DetailKey" android:text="함께 근무" />
+                <TextView style="@style/DetailVal" android:text="현우 · 지수" />
+            </LinearLayout>
+
+            <View style="@style/DetailDivider" />
+
+            <LinearLayout style="@style/DetailRow">
+                <TextView style="@style/DetailKey" android:text="예상 급여" />
+                <TextView style="@style/DetailVal" android:text="₩48,000" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_soft_gray"
+            android:text="메모 · 오후 재고 정리 부탁해요"
+            android:textColor="@color/text_secondary"
+            android:textSize="11sp"
+            android:padding="11dp" />
+
+        <TextView
+            android:id="@+id/btn_sub_request"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_btn_outline"
+            android:text="대타 요청하기"
+            android:textColor="@color/brand_blue"
+            android:textSize="13sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingVertical="13dp"
+            android:foreground="?attr/selectableItemBackground" />
+    </LinearLayout>
+</ScrollView>

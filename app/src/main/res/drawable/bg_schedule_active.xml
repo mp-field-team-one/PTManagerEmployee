@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+    <!-- left accent bar -->
+    <item>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brand_blue" />
+            <corners android:radius="12dp" />
+        </shape>
+    </item>
+    <!-- body inset to reveal a 3dp accent strip on the left -->
+    <item android:left="3dp">
+        <shape android:shape="rectangle">
+            <solid android:color="@color/brand_blue_bg" />
+            <corners android:topRightRadius="12dp" android:bottomRightRadius="12dp" />
+        </shape>
+    </item>
+</layer-list>

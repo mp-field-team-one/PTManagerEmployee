@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:paddingHorizontal="16dp"
+        android:paddingTop="16dp"
+        android:paddingBottom="24dp">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="내 정보"
+            android:textColor="@color/text_primary"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <!-- profile header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <View
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:background="@drawable/bg_circle_blue" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="14dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="민지님"
+                    android:textColor="@color/text_primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text="강남점 · 홀 · 알바"
+                    android:textColor="@color/text_tertiary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- weekly summary -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_soft_gray"
+            android:padding="14dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이번 주 요약"
+                android:textColor="@color/text_tertiary"
+                android:textSize="10sp"
+                android:textStyle="bold" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:orientation="horizontal"
+                android:baselineAligned="false">
+
+                <LinearLayout style="@style/SummaryCol">
+                    <TextView style="@style/SummaryNum" android:text="12.5h" />
+                    <TextView style="@style/SummaryLabel" android:text="근무" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/SummaryCol">
+                    <TextView style="@style/SummaryNum" android:text="3회" />
+                    <TextView style="@style/SummaryLabel" android:text="출근" />
+                </LinearLayout>
+
+                <LinearLayout style="@style/SummaryCol">
+                    <TextView style="@style/SummaryNum" android:text="₩187k" />
+                    <TextView style="@style/SummaryLabel" android:text="예상 급여" />
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <!-- menu rows -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:orientation="vertical"
+            android:background="@drawable/bg_card"
+            android:divider="@drawable/divider_line"
+            android:showDividers="middle">
+
+            <TextView android:id="@+id/row_profile" style="@style/MenuRow" android:text="프로필 수정" />
+            <TextView android:id="@+id/row_members" style="@style/MenuRow" android:text="매장 멤버 목록" />
+            <TextView android:id="@+id/row_noti" style="@style/MenuRow" android:text="알림 설정" />
+            <TextView android:id="@+id/row_logout" style="@style/MenuRow" android:text="로그아웃" android:textColor="@color/accent_red" />
+        </LinearLayout>
+    </LinearLayout>
+</androidx.core.widget.NestedScrollView>
