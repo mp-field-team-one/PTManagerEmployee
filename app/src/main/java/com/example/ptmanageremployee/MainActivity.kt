@@ -14,8 +14,7 @@ class MainActivity : AppCompatActivity() {
 
     private val home by lazy { HomeFragment() }
     private val schedule by lazy { ScheduleFragment() }
-    private val sub by lazy { SubFragment() }
-    private val notice by lazy { NoticeFragment() }
+    private val communication by lazy { CommunicationFragment() }
     private val my by lazy { MyFragment() }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -36,18 +35,13 @@ class MainActivity : AppCompatActivity() {
             when (item.itemId) {
                 R.id.nav_home -> show(home)
                 R.id.nav_schedule -> show(schedule)
-                R.id.nav_sub -> show(sub)
-                R.id.nav_notice -> show(notice)
+                R.id.nav_communication -> show(communication)
                 R.id.nav_my -> show(my)
                 else -> return@setOnItemSelectedListener false
             }
             true
         }
         if (savedInstanceState == null) bottomNav.selectedItemId = R.id.nav_home
-    }
-
-    fun selectTab(itemId: Int) {
-        findViewById<BottomNavigationView>(R.id.bottom_nav).selectedItemId = itemId
     }
 
     private fun show(fragment: Fragment) {

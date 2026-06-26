@@ -2,7 +2,6 @@
     <string name="app_name">알바 관리</string>
     <string name="nav_home">홈</string>
     <string name="nav_schedule">스케줄</string>
-    <string name="nav_sub">대타</string>
-    <string name="nav_notice">공지</string>
+    <string name="nav_communication">소통</string>
     <string name="nav_my">내 정보</string>
 </resources>

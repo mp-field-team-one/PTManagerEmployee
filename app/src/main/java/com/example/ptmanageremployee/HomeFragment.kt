@@ -28,8 +28,7 @@ class HomeFragment : Fragment() {
             startActivity(Intent(requireContext(), NotificationActivity::class.java))
         }
         view.findViewById<View>(R.id.btn_sub_request).setOnClickListener {
-            activity?.findViewById<BottomNavigationView>(R.id.bottom_nav)
-                ?.selectedItemId = R.id.nav_sub
+            startActivity(Intent(requireContext(), SubRequestActivity::class.java))
         }
     }
 }
