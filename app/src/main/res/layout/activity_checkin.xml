@@ -28,6 +28,7 @@
         android:paddingTop="8dp">
 
         <TextView
+            android:id="@+id/tv_checkin_shift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="강남점 · 14:00 근무"

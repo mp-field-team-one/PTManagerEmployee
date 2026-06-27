@@ -39,6 +39,7 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/members_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -47,61 +48,13 @@
             android:paddingBottom="24dp">
 
             <TextView
+                android:id="@+id/tv_members_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="강남점 · 멤버 6명"
+                android:text="멤버"
                 android:textColor="@color/text_tertiary"
                 android:textSize="12sp"
                 android:layout_marginBottom="6dp" />
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="박사장" />
-                    <TextView style="@style/MemberSub" android:text="사장님" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="민지" />
-                    <TextView style="@style/MemberSub" android:text="홀 · 알바" />
-                </LinearLayout>
-                <TextView style="@style/MemberTag" android:text="나" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="현우" />
-                    <TextView style="@style/MemberSub" android:text="주방 · 알바" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="지수" />
-                    <TextView style="@style/MemberSub" android:text="홀 · 알바" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="태윤" />
-                    <TextView style="@style/MemberSub" android:text="주방 · 알바" />
-                </LinearLayout>
-            </LinearLayout>
-
-            <LinearLayout style="@style/MemberRow">
-                <View style="@style/MemberAvatar" />
-                <LinearLayout style="@style/MemberMeta">
-                    <TextView style="@style/MemberName" android:text="서연" />
-                    <TextView style="@style/MemberSub" android:text="홀 · 알바" />
-                </LinearLayout>
-            </LinearLayout>
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

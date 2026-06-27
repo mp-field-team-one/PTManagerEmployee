@@ -21,6 +21,7 @@
             android:gravity="center_vertical">
 
             <TextView
+                android:id="@+id/tv_greeting"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
@@ -63,6 +64,7 @@
             android:foreground="?attr/selectableItemBackground">
 
             <TextView
+                android:id="@+id/tv_today_label"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="오늘 근무 · 강남점 홀"
@@ -71,6 +73,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_today_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="6dp"
@@ -80,6 +83,7 @@
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_today_with"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"

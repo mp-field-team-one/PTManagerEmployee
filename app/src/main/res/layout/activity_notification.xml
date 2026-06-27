@@ -39,35 +39,23 @@
         android:layout_weight="1">
 
         <LinearLayout
+            android:id="@+id/noti_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:divider="@drawable/divider_line"
             android:showDividers="middle">
 
-            <LinearLayout style="@style/NotiRow">
-                <TextView style="@style/NotiTitle" android:text="🕘 출근 알림" />
-                <TextView style="@style/NotiBody" android:text="오늘 14:00 강남점 홀 근무가 있어요. 잊지 마세요!" />
-                <TextView style="@style/NotiTime" android:text="방금 전" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/NotiRow">
-                <TextView style="@style/NotiTitle" android:text="🔁 대타 결과" />
-                <TextView style="@style/NotiBody" android:text="12/18 대타 요청이 승인되었습니다. 현우님이 대체합니다." />
-                <TextView style="@style/NotiTime" android:text="2시간 전" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/NotiRow">
-                <TextView style="@style/NotiTitle" android:text="📢 새 공지" />
-                <TextView style="@style/NotiBody" android:text="‘12월 스케줄 확정 안내’ 공지가 등록되었습니다." />
-                <TextView style="@style/NotiTime" android:text="오늘 09:12" />
-            </LinearLayout>
-
-            <LinearLayout style="@style/NotiRow">
-                <TextView style="@style/NotiTitle" android:text="🗓 근무 편성 변경" />
-                <TextView style="@style/NotiBody" android:text="12/29 근무가 주방 → 홀로 변경되었습니다." />
-                <TextView style="@style/NotiTime" android:text="어제" />
-            </LinearLayout>
+            <TextView
+                android:id="@+id/tv_noti_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="24dp"
+                android:gravity="center"
+                android:text="알림이 없습니다."
+                android:textColor="@color/text_tertiary"
+                android:textSize="13sp"
+                android:visibility="gone" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>
