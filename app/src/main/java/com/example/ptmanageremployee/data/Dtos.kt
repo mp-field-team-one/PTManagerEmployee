@@ -178,6 +178,11 @@ data class UpdateProfileRequest(
     val name: String,
 )
 
+data class RegisterDeviceTokenRequest(
+    val token: String,
+    val platform: String = "ANDROID",
+)
+
 // ---- 공통 페이지 응답 ----
 data class PageResponse<T>(
     val content: List<T> = emptyList(),

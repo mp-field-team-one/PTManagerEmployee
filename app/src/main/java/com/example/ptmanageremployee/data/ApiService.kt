@@ -122,4 +122,11 @@ interface ApiService {
 
     @POST("api/notifications/read-all")
     suspend fun markAllNotificationsRead()
+
+    // ---- Device token (푸시 / FCM) ----
+    @POST("api/users/me/device-tokens")
+    suspend fun registerDeviceToken(@Body body: RegisterDeviceTokenRequest)
+
+    @DELETE("api/users/me/device-tokens/{token}")
+    suspend fun deleteDeviceToken(@Path("token") token: String)
 }
