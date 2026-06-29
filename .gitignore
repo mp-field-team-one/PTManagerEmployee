@@ -12,4 +12,12 @@
 /captures
 .externalNativeBuild
 .cxx
-local.properties
+
+# 서명 키 / 시크릿 — 절대 커밋 금지
+*.jks
+*.keystore
+keystore.properties
+google-services.json
+.env
+.env.*
+!.env.example

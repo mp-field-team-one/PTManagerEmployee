@@ -1,5 +1,6 @@
 package com.example.ptmanageremployee.data
 
+import com.example.ptmanageremployee.BuildConfig
 import com.google.gson.Gson
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
@@ -18,7 +19,7 @@ import java.util.concurrent.TimeUnit
  */
 object Network {
 
-    const val BASE_URL = "http://10.0.2.2:8080/"
+    val BASE_URL: String = BuildConfig.BASE_URL
 
     /** 저장된 액세스 토큰을 Authorization 헤더로 부착한다. */
     private val authInterceptor = Interceptor { chain ->

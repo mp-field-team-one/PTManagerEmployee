@@ -1,6 +1,14 @@
+import java.util.Properties
+
 plugins {
     alias(libs.plugins.android.application)
 }
+
+// local.properties(버전관리 제외)에서 백엔드 주소를 읽는다. 없으면 기본값 사용.
+val baseUrl: String = Properties().apply {
+    rootProject.file("local.properties").takeIf { it.exists() }
+        ?.inputStream()?.use { load(it) }
+}.getProperty("base.url") ?: "http://3.36.215.180:8080/"
 
 android {
     namespace = "com.example.ptmanageremployee"
@@ -18,6 +26,12 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "BASE_URL", "\"$baseUrl\"")
+    }
+
+    buildFeatures {
+        buildConfig = true
     }
 
     buildTypes {
