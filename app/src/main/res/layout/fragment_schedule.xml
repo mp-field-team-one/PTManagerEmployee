@@ -72,7 +72,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
-            android:text="12월 3일 수요일"
+            android:text=""
             android:textColor="@color/text_tertiary"
             android:textSize="11sp"
             android:textStyle="bold" />
@@ -94,7 +94,7 @@
                 android:id="@+id/tv_my_shift_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="14:00 – 18:00"
+                android:text=""
                 android:textColor="@color/text_primary"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -104,7 +104,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="강남점 · 홀 · 함께 현우"
+                android:text=""
                 android:textColor="@color/text_secondary"
                 android:textSize="10sp" />
         </LinearLayout>
@@ -123,7 +123,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="18:00 – 22:00"
+                android:text=""
                 android:textColor="#555555"
                 android:textSize="13sp"
                 android:textStyle="bold" />
@@ -132,7 +132,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="3dp"
-                android:text="지수 근무 (내 근무 아님)"
+                android:text=""
                 android:textColor="@color/text_hint"
                 android:textSize="10sp" />
         </LinearLayout>

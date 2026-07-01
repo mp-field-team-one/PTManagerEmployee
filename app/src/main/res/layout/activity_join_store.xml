@@ -119,7 +119,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="강남점에 참여 요청을 보냈어요.\n사장님이 승인하면 알림으로 알려드릴게요."
+            android:text="참여 요청을 보냈어요.\n사장님이 승인하면 알림으로 알려드릴게요."
             android:textColor="@color/text_tertiary"
             android:textSize="13sp"
             android:gravity="center"

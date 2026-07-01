@@ -51,7 +51,7 @@
                 android:id="@+id/tv_members_count"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="멤버"
+                android:text=""
                 android:textColor="@color/text_tertiary"
                 android:textSize="12sp"
                 android:layout_marginBottom="6dp" />

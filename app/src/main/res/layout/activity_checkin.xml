@@ -31,7 +31,7 @@
             android:id="@+id/tv_checkin_shift"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="강남점 · 14:00 근무"
+            android:text=""
             android:textColor="@color/text_tertiary"
             android:textSize="12sp"
             android:textStyle="bold" />
@@ -57,7 +57,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
-                android:text="매장 20m 이내"
+                android:text=""
                 android:textColor="@color/text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
@@ -66,7 +66,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:text="13:58"
+            android:text=""
             android:textColor="@color/text_primary"
             android:textSize="32sp"
             android:textStyle="bold" />
@@ -75,7 +75,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="2dp"
-            android:text="정시 출근까지 2분"
+            android:text=""
             android:textColor="@color/text_hint"
             android:textSize="11sp" />
     </LinearLayout>

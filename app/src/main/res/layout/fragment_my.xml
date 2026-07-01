@@ -45,7 +45,7 @@
                     android:id="@+id/tv_my_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="민지님"
+                    android:text=""
                     android:textColor="@color/text_primary"
                     android:textSize="17sp"
                     android:textStyle="bold" />
@@ -55,7 +55,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:text="강남점 · 홀 · 알바"
+                    android:text=""
                     android:textColor="@color/text_tertiary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -86,17 +86,17 @@
                 android:baselineAligned="false">
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="12.5h" />
+                    <TextView style="@style/SummaryNum" android:text="" />
                     <TextView style="@style/SummaryLabel" android:text="근무" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="3회" />
+                    <TextView style="@style/SummaryNum" android:text="" />
                     <TextView style="@style/SummaryLabel" android:text="출근" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="₩187k" />
+                    <TextView style="@style/SummaryNum" android:text="" />
                     <TextView style="@style/SummaryLabel" android:text="예상 급여" />
                 </LinearLayout>
             </LinearLayout>
