@@ -2,13 +2,18 @@ package com.example.ptmanageremployee.data
 
 import com.example.ptmanageremployee.BuildConfig
 import com.google.gson.Gson
+import okhttp3.Authenticator
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
+import okhttp3.Request
 import okhttp3.Response
+import okhttp3.Route
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.HttpException
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
+import retrofit2.http.Body
+import retrofit2.http.POST
 import java.util.concurrent.TimeUnit
 
 /**
@@ -20,6 +25,14 @@ import java.util.concurrent.TimeUnit
 object Network {
 
     val BASE_URL: String = BuildConfig.BASE_URL
+
+    /** 저장된 액세스 토큰을 Authorization 헤더로 부착한다. */
+    /**
+     * 리프레시 토큰마저 만료돼 세션을 복구할 수 없을 때 호출된다.
+     * UI(예: MainActivity)에서 로그인 화면으로 보내도록 설정한다.
+     */
+    @Volatile
+    var onSessionExpired: (() -> Unit)? = null
 
     /** 저장된 액세스 토큰을 Authorization 헤더로 부착한다. */
     private val authInterceptor = Interceptor { chain ->
@@ -35,16 +48,94 @@ object Network {
         chain.proceed(request)
     }
 
-    private val client: OkHttpClient by lazy {
-        val logging = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+    private val logging = HttpLoggingInterceptor().apply {
+        level = HttpLoggingInterceptor.Level.BODY
+    }
+
+    /**
+     * 401 응답 시 리프레시 토큰으로 액세스 토큰을 갱신하고 원 요청을 재시도한다.
+     * 갱신 호출은 [refreshApi](authenticator 미적용 클라이언트)로 수행해 재귀를 막는다.
+     */
+    private val refreshLock = Any()
+
+    private val tokenAuthenticator = object : Authenticator {
+        override fun authenticate(route: Route?, response: Response): Request? {
+            // 이미 갱신 후 재시도한 요청까지 401 이면 포기(무한 루프 방지).
+            if (responseCount(response) >= 2) return null
+
+            val refreshToken = TokenStore.refreshToken
+            if (refreshToken.isNullOrBlank()) return null
+
+            synchronized(refreshLock) {
+                val currentToken = TokenStore.accessToken
+                val failedToken = response.request.header("Authorization")
+                    ?.removePrefix("Bearer ")
+
+                // 다른 스레드가 이미 갱신했으면 새 토큰으로 곧바로 재시도.
+                if (!currentToken.isNullOrBlank() && currentToken != failedToken) {
+                    return retryWith(response.request, currentToken)
+                }
+
+                val renewed = runCatching {
+                    refreshApi.refresh(RefreshRequest(refreshToken)).execute()
+                }.getOrNull()
+
+                val body = renewed?.body()
+                if (renewed == null || !renewed.isSuccessful || body == null) {
+                    // 리프레시 실패 → 세션 종료.
+                    TokenStore.clear()
+                    onSessionExpired?.invoke()
+                    return null
+                }
+
+                TokenStore.saveSession(body)
+                return retryWith(response.request, body.accessToken)
+            }
         }
+    }
+
+    private fun retryWith(request: Request, accessToken: String): Request =
+        request.newBuilder()
+            .header("Authorization", "Bearer $accessToken")
+            .build()
+
+    /** 이 응답까지 이어진 응답 체인 길이(재시도 횟수 추적). */
+    private fun responseCount(response: Response): Int {
+        var count = 1
+        var prior = response.priorResponse
+        while (prior != null) {
+            count++
+            prior = prior.priorResponse
+        }
+        return count
+    }
+
+    private val client: OkHttpClient by lazy {
         OkHttpClient.Builder()
             .addInterceptor(authInterceptor)
+            .addInterceptor(logging)
+            .authenticator(tokenAuthenticator)
+            .connectTimeout(15, TimeUnit.SECONDS)
+            .readTimeout(15, TimeUnit.SECONDS)
+            .build()
+    }
+
+    /** 토큰 갱신 전용 클라이언트: authInterceptor·authenticator 를 적용하지 않는다. */
+    private val refreshClient: OkHttpClient by lazy {
+        OkHttpClient.Builder()
             .addInterceptor(logging)
             .connectTimeout(15, TimeUnit.SECONDS)
             .readTimeout(15, TimeUnit.SECONDS)
             .build()
+    }
+
+    private val refreshApi: RefreshApi by lazy {
+        Retrofit.Builder()
+            .baseUrl(BASE_URL)
+            .client(refreshClient)
+            .addConverterFactory(GsonConverterFactory.create())
+            .build()
+            .create(RefreshApi::class.java)
     }
 
     val api: ApiService by lazy {
@@ -55,6 +146,12 @@ object Network {
             .build()
             .create(ApiService::class.java)
     }
+}
+
+/** 토큰 갱신만 담당하는 최소 API(동기 호출). */
+private interface RefreshApi {
+    @POST("api/auth/refresh")
+    fun refresh(@Body body: RefreshRequest): retrofit2.Call<TokenResponse>
 }
 
 /** 백엔드 공통 에러 응답(ApiError) 구조. */
