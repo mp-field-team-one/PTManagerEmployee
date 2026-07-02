@@ -16,49 +16,17 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="소통"
+            android:text="공지"
             android:textColor="@color/text_primary"
             android:textSize="15sp"
             android:textStyle="bold" />
-
-        <!-- segmented chips -->
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/chip_notice"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill_active"
-                android:text="공지"
-                android:textColor="@color/white"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp" />
-
-            <TextView
-                android:id="@+id/chip_messenger"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_pill"
-                android:text="메신저"
-                android:textColor="@color/text_tertiary"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp" />
-        </LinearLayout>
 
         <!-- ===== 공지 panel ===== -->
         <LinearLayout
             android:id="@+id/panel_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
             android:orientation="vertical">
 
             <TextView
@@ -71,115 +39,6 @@
                 android:textColor="@color/text_tertiary"
                 android:textSize="12sp"
                 android:visibility="gone" />
-        </LinearLayout>
-
-        <!-- ===== 메신저 panel ===== -->
-        <LinearLayout
-            android:id="@+id/panel_messenger"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:visibility="gone">
-
-            <!-- 사장님 dm -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="14dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_card"
-                android:padding="12dp">
-
-                <View
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_circle_blue" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text=""
-                        android:textColor="@color/text_tertiary"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:background="@drawable/bg_pill_active"
-                    android:textColor="@color/white"
-                    android:textSize="9sp"
-                    android:textStyle="bold"
-                    android:minWidth="18dp"
-                    android:gravity="center"
-                    android:paddingHorizontal="6dp"
-                    android:paddingVertical="2dp" />
-            </LinearLayout>
-
-            <!-- 강남점 그룹 -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:gravity="center_vertical"
-                android:background="@drawable/bg_card"
-                android:padding="12dp">
-
-                <View
-                    android:layout_width="36dp"
-                    android:layout_height="36dp"
-                    android:background="@drawable/bg_circle_blue" />
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:layout_marginStart="10dp"
-                    android:orientation="vertical">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text=""
-                        android:textColor="@color/text_primary"
-                        android:textSize="13sp"
-                        android:textStyle="bold" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginTop="2dp"
-                        android:text=""
-                        android:textColor="@color/text_tertiary"
-                        android:textSize="11sp" />
-                </LinearLayout>
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text=""
-                    android:textColor="@color/text_hint"
-                    android:textSize="9sp" />
-            </LinearLayout>
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

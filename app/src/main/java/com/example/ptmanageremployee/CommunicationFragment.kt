@@ -23,27 +23,6 @@ class CommunicationFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_communication, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        val chipNotice = view.findViewById<View>(R.id.chip_notice)
-        val chipMessenger = view.findViewById<View>(R.id.chip_messenger)
-        val panelNotice = view.findViewById<View>(R.id.panel_notice)
-        val panelMessenger = view.findViewById<View>(R.id.panel_messenger)
-
-        fun select(noticeSel: Boolean) {
-            chipNotice.setBackgroundResource(if (noticeSel) R.drawable.bg_pill_active else R.drawable.bg_pill)
-            chipMessenger.setBackgroundResource(if (noticeSel) R.drawable.bg_pill else R.drawable.bg_pill_active)
-            (chipNotice as? TextView)?.setTextColor(
-                resources.getColor(if (noticeSel) R.color.white else R.color.text_tertiary, null)
-            )
-            (chipMessenger as? TextView)?.setTextColor(
-                resources.getColor(if (noticeSel) R.color.text_tertiary else R.color.white, null)
-            )
-            panelNotice.visibility = if (noticeSel) View.VISIBLE else View.GONE
-            panelMessenger.visibility = if (noticeSel) View.GONE else View.VISIBLE
-        }
-        chipNotice.setOnClickListener { select(true) }
-        chipMessenger.setOnClickListener { select(false) }
-        select(true)
-
         loadNotices(view)
     }
 

@@ -3,6 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
 
     <application
         android:name=".App"
@@ -33,10 +34,25 @@
         <activity android:name=".CheckInActivity" android:exported="false" />
         <activity android:name=".ShiftDetailActivity" android:exported="false" />
         <activity android:name=".SubRequestActivity" android:exported="false" />
+        <activity android:name=".SwapListActivity" android:exported="false" />
+        <activity android:name=".SwapDetailActivity" android:exported="false" />
         <activity android:name=".NoticeDetailActivity" android:exported="false" />
         <activity android:name=".NotificationActivity" android:exported="false" />
         <activity android:name=".ProfileEditActivity" android:exported="false" />
         <activity android:name=".MembersActivity" android:exported="false" />
+
+        <!-- FCM 푸시 수신 서비스 -->
+        <service
+            android:name=".PtmMessagingService"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>
+
+        <meta-data
+            android:name="com.google.firebase.messaging.default_notification_channel_id"
+            android:value="ptm_default" />
     </application>
 
 </manifest>

@@ -41,15 +41,30 @@
                 android:paddingHorizontal="11dp"
                 android:paddingVertical="6dp" />
 
-            <ImageView
-                android:id="@+id/btn_bell"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="6dp"
-                android:padding="8dp"
-                android:src="@drawable/ic_bell"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:contentDescription="알림" />
+            <FrameLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="6dp">
+
+                <ImageView
+                    android:id="@+id/btn_bell"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="8dp"
+                    android:src="@drawable/ic_bell"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:contentDescription="알림" />
+
+                <View
+                    android:id="@+id/bell_dot"
+                    android:layout_width="9dp"
+                    android:layout_height="9dp"
+                    android:layout_gravity="top|end"
+                    android:layout_marginTop="7dp"
+                    android:layout_marginEnd="7dp"
+                    android:background="@drawable/bg_dot_red"
+                    android:visibility="gone" />
+            </FrameLayout>
         </LinearLayout>
 
         <!-- today work card -->
@@ -143,6 +158,20 @@
                 android:paddingVertical="13dp"
                 android:foreground="?attr/selectableItemBackground" />
         </LinearLayout>
+
+        <TextView
+            android:id="@+id/btn_swap_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:background="@drawable/bg_btn_outline_gray"
+            android:text="대타 목록 · 지원하기"
+            android:textColor="@color/text_secondary"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:paddingVertical="13dp"
+            android:foreground="?attr/selectableItemBackground" />
 
         <!-- notices -->
         <TextView

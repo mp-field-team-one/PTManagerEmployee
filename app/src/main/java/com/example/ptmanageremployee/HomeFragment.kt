@@ -47,8 +47,21 @@ class HomeFragment : Fragment() {
         view.findViewById<View>(R.id.btn_sub_request).setOnClickListener {
             startActivity(shiftIntent(SubRequestActivity::class.java))
         }
+        view.findViewById<View>(R.id.btn_swap_list).setOnClickListener {
+            startActivity(Intent(requireContext(), SwapListActivity::class.java))
+        }
 
         loadToday(view)
+        loadBellBadge(view)
+    }
+
+    /** 안 읽은 알림 개수(GET /api/notifications/unread-count)로 종 아이콘 빨간 점을 표시한다. */
+    private fun loadBellBadge(view: View) {
+        lifecycleScope.launch {
+            val count = runCatching { Network.api.getNotificationUnreadCount().count }.getOrDefault(0)
+            view.findViewById<View>(R.id.bell_dot).visibility =
+                if (count > 0) View.VISIBLE else View.GONE
+        }
     }
 
     private fun loadToday(view: View) {

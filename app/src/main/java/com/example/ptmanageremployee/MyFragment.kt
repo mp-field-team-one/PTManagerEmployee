@@ -12,6 +12,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.NotificationSettingUpdate
+import com.example.ptmanageremployee.data.Push
 import com.example.ptmanageremployee.data.TokenStore
 import com.example.ptmanageremployee.data.toUserMessage
 import kotlinx.coroutines.launch
@@ -23,7 +24,17 @@ class MyFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         view.findViewById<TextView>(R.id.tv_my_name).text = "${TokenStore.name ?: "사용자"}님"
-        view.findViewById<TextView>(R.id.tv_my_sub).text = TokenStore.email ?: "알바"
+        val subView = view.findViewById<TextView>(R.id.tv_my_sub)
+        subView.text = TokenStore.email ?: "알바"
+        // 소속 매장이 있으면 매장명을 함께 표시한다(GET /api/workplaces/{id}).
+        val workplaceId = TokenStore.workplaceId
+        if (workplaceId > 0) {
+            lifecycleScope.launch {
+                runCatching { Network.api.getWorkplace(workplaceId) }.getOrNull()?.let { wp ->
+                    subView.text = listOfNotNull(wp.name, "알바").joinToString(" · ")
+                }
+            }
+        }
 
         view.findViewById<View>(R.id.row_profile).setOnClickListener {
             startActivity(Intent(requireContext(), ProfileEditActivity::class.java))
@@ -35,7 +46,10 @@ class MyFragment : Fragment() {
         view.findViewById<View>(R.id.row_logout).setOnClickListener {
             // 서버 로그아웃은 베스트 에포트로 호출하고, 로컬 세션을 비운 뒤 로그인 화면으로.
             lifecycleScope.launch {
+                // 이 기기의 FCM 토큰을 서버에서 먼저 제거(로그인 상태에서 호출).
+                runCatching { Push.currentToken()?.let { Network.api.deleteDeviceToken(it) } }
                 runCatching { Network.api.logout() }
+                Push.invalidateLocalToken()
                 TokenStore.clear()
                 val i = Intent(requireContext(), LoginActivity::class.java)
                 i.flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
