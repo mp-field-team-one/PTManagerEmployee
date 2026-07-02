@@ -69,6 +69,9 @@ interface ApiService {
     @POST("api/shifts/{id}/check-in")
     suspend fun checkIn(@Path("id") id: Long, @Body body: CheckInRequest): ShiftDto
 
+    @POST("api/shifts/{id}/check-out")
+    suspend fun checkOut(@Path("id") id: Long, @Body body: CheckInRequest): ShiftDto
+
     // ---- SwapRequest ----
     @POST("api/swap-requests")
     suspend fun createSwapRequest(@Body body: CreateSwapRequest): SwapRequestDto
