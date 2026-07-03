@@ -52,16 +52,13 @@ class HomeFragment : Fragment() {
         }
 
         loadToday(view)
-        loadBellBadge(view)
     }
 
     /** 안 읽은 알림 개수(GET /api/notifications/unread-count)로 종 아이콘 빨간 점을 표시한다. */
-    private fun loadBellBadge(view: View) {
-        lifecycleScope.launch {
-            val count = runCatching { Network.api.getNotificationUnreadCount().count }.getOrDefault(0)
-            view.findViewById<View>(R.id.bell_dot).visibility =
-                if (count > 0) View.VISIBLE else View.GONE
-        }
+    private suspend fun loadBellBadge(view: View) {
+        val count = runCatching { Network.api.getNotificationUnreadCount().count }.getOrDefault(0)
+        view.findViewById<View>(R.id.bell_dot).visibility =
+            if (count > 0) View.VISIBLE else View.GONE
     }
 
     private fun loadToday(view: View) {
@@ -87,6 +84,8 @@ class HomeFragment : Fragment() {
             } catch (e: Exception) {
                 Toast.makeText(requireContext(), e.toUserMessage(), Toast.LENGTH_SHORT).show()
             }
+            // 오늘 근무 로드 후 이어서(순차) 알림 뱃지 로드 — 동시 요청을 줄여 서버 부하를 낮춘다.
+            loadBellBadge(view)
         }
     }
 

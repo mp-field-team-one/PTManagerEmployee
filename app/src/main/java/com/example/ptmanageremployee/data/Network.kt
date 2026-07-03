@@ -58,6 +58,10 @@ object Network {
      */
     private val refreshLock = Any()
 
+    /** 리프레시 재시도 횟수/간격. 서버 일시 장애 시 바로 로그아웃하지 않도록 몇 차례 재시도한다. */
+    private const val REFRESH_MAX_ATTEMPTS = 3
+    private const val REFRESH_RETRY_DELAY_MS = 600L
+
     private val tokenAuthenticator = object : Authenticator {
         override fun authenticate(route: Route?, response: Response): Request? {
             // 이미 갱신 후 재시도한 요청까지 401 이면 포기(무한 루프 방지).
@@ -76,20 +80,39 @@ object Network {
                     return retryWith(response.request, currentToken)
                 }
 
-                val renewed = runCatching {
-                    refreshApi.refresh(RefreshRequest(refreshToken)).execute()
-                }.getOrNull()
-
-                val body = renewed?.body()
-                if (renewed == null || !renewed.isSuccessful || body == null) {
-                    // 리프레시 실패 → 세션 종료.
-                    TokenStore.clear()
-                    onSessionExpired?.invoke()
-                    return null
+                // 리프레시를 여러 번 재시도한다. 서버 과부하로 인한 '일시적' 실패(네트워크·5xx·빈 401)면
+                // 세션을 지우지 않고 이번 요청만 실패시켜, 사용자가 로그아웃되지 않게 한다.
+                var definitiveInvalid = false
+                for (attempt in 0 until REFRESH_MAX_ATTEMPTS) {
+                    val renewed = runCatching {
+                        refreshApi.refresh(RefreshRequest(refreshToken)).execute()
+                    }.getOrNull()
+                    val body = renewed?.body()
+                    if (renewed != null && renewed.isSuccessful && body != null) {
+                        TokenStore.saveSession(body)
+                        return retryWith(response.request, body.accessToken)
+                    }
+                    // 리프레시 토큰이 '확실히' 무효(본문 있는 400/401)일 때만 로그아웃 확정.
+                    if (renewed != null && (renewed.code() == 401 || renewed.code() == 400)) {
+                        val err = runCatching { renewed.errorBody()?.string() }.getOrNull()
+                        if (!err.isNullOrBlank()) {
+                            definitiveInvalid = true
+                            break
+                        }
+                    }
+                    // 그 외(네트워크·5xx·빈 응답)는 일시적 → 잠깐 대기 후 재시도.
+                    if (attempt < REFRESH_MAX_ATTEMPTS - 1) {
+                        runCatching { Thread.sleep(REFRESH_RETRY_DELAY_MS) }
+                    }
                 }
 
-                TokenStore.saveSession(body)
-                return retryWith(response.request, body.accessToken)
+                if (definitiveInvalid) {
+                    // 리프레시 토큰 만료/무효 → 세션 종료.
+                    TokenStore.clear()
+                    onSessionExpired?.invoke()
+                }
+                // 일시적 실패면 세션 유지(다음 요청에서 회복). 이번 요청만 401로 실패.
+                return null
             }
         }
     }
