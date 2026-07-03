@@ -23,6 +23,9 @@ class CommunicationFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_communication, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        view.findViewById<View>(R.id.btn_handover_list).setOnClickListener {
+            startActivity(Intent(requireContext(), HandoverListActivity::class.java))
+        }
         loadNotices(view)
     }
 

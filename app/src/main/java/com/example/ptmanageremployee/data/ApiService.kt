@@ -109,6 +109,19 @@ interface ApiService {
     @POST("api/notices/read")
     suspend fun markNoticesRead()
 
+    // ---- Handover (인수인계 노트) ----
+    @GET("api/handovers")
+    suspend fun getHandovers(
+        @Query("workplaceId") workplaceId: Long,
+        @Query("category") category: String? = null,
+    ): List<HandoverDto>
+
+    @POST("api/handovers")
+    suspend fun createHandover(@Body body: CreateHandoverRequest): HandoverDto
+
+    @DELETE("api/handovers/{id}")
+    suspend fun deleteHandover(@Path("id") id: Long)
+
     // ---- Notification ----
     @GET("api/notifications")
     suspend fun getNotifications(
