@@ -1,10 +1,12 @@
 package com.example.ptmanageremployee
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
+import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -64,6 +66,35 @@ class MainActivity : AppCompatActivity() {
         // 알림 권한(Android 13+) 요청 후 FCM 토큰을 백엔드에 등록한다.
         requestNotifPermission()
         Push.registerCurrentToken()
+    }
+
+    override fun onStart() {
+        super.onStart()
+        syncMembership()
+    }
+
+    /**
+     * 매장에서 내보내진 경우(사장이 멤버 삭제 → 소속 해제)를 감지해 매장 참여 화면으로 돌려보낸다.
+     * 서버가 최신 소속을 알려주므로, workplaceId 가 사라졌으면 로컬 세션에서도 지우고 이동한다.
+     * 네트워크 실패 등 불확실한 경우엔 아무 것도 하지 않는다(오탐으로 내쫓지 않음).
+     */
+    private fun syncMembership() {
+        lifecycleScope.launch {
+            val user = runCatching { Network.api.me() }.getOrNull() ?: return@launch
+            TokenStore.updateUser(user)
+            if (user.workplaceId == null) {
+                Toast.makeText(
+                    this@MainActivity,
+                    "매장에서 내보내졌어요. 다시 매장에 참여해 주세요.",
+                    Toast.LENGTH_LONG,
+                ).show()
+                startActivity(
+                    Intent(this@MainActivity, JoinStoreActivity::class.java)
+                        .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK),
+                )
+                finish()
+            }
+        }
     }
 
     private fun requestNotifPermission() {
