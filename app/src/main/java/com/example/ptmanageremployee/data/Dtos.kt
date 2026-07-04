@@ -153,6 +153,7 @@ data class HandoverDto(
     val authorId: Long? = null,
     val authorName: String? = null,
     val category: String? = null,
+    val title: String? = null,
     val content: String? = null,
     val createdAt: String? = null,
 )
@@ -160,6 +161,7 @@ data class HandoverDto(
 data class CreateHandoverRequest(
     val workplaceId: Long,
     val category: String,
+    val title: String,
     val content: String,
 )
 
@@ -200,6 +202,22 @@ data class UpdateProfileRequest(
 data class RegisterDeviceTokenRequest(
     val token: String,
     val platform: String = "ANDROID",
+)
+
+// ---- 급여 ----
+/** 직원 본인의 월 급여 집계. (실근태 기준) */
+data class MyPayrollSummary(
+    val yearMonth: String? = null,
+    val hourlyWage: Int = 0,
+    val workedMinutes: Long = 0,
+    val amount: Long = 0,
+    val weeks: List<WeeklyCost> = emptyList(),
+)
+
+/** 월을 4주 버킷(1–7, 8–14, 15–21, 22–말일)으로 나눈 주차별 급여. */
+data class WeeklyCost(
+    val week: Int = 0,
+    val amount: Long = 0,
 )
 
 // ---- 공통 페이지 응답 ----

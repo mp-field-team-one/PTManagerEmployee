@@ -109,6 +109,10 @@ interface ApiService {
     @POST("api/notices/read")
     suspend fun markNoticesRead()
 
+    // ---- Payroll (내 급여) ----
+    @GET("api/payroll/me")
+    suspend fun getMyPayroll(@Query("yearMonth") yearMonth: String): MyPayrollSummary
+
     // ---- Handover (인수인계 노트) ----
     @GET("api/handovers")
     suspend fun getHandovers(

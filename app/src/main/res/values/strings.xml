@@ -3,5 +3,6 @@
     <string name="nav_home">홈</string>
     <string name="nav_schedule">스케줄</string>
     <string name="nav_communication">소통</string>
+    <string name="nav_stats">급여</string>
     <string name="nav_my">내 정보</string>
 </resources>

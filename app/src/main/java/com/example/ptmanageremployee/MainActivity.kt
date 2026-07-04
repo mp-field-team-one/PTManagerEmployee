@@ -27,6 +27,7 @@ class MainActivity : AppCompatActivity() {
     private val home by lazy { HomeFragment() }
     private val schedule by lazy { ScheduleFragment() }
     private val communication by lazy { CommunicationFragment() }
+    private val stats by lazy { StatsFragment() }
     private val my by lazy { MyFragment() }
 
     private val notifPermLauncher =
@@ -55,6 +56,7 @@ class MainActivity : AppCompatActivity() {
                     // 공지 탭에 들어가면 읽음 처리되므로 레드닷 제거.
                     bottomNav.removeBadge(R.id.nav_communication)
                 }
+                R.id.nav_stats -> show(stats)
                 R.id.nav_my -> show(my)
                 else -> return@setOnItemSelectedListener false
             }

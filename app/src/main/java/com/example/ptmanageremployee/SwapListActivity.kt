@@ -146,7 +146,7 @@ class SwapListActivity : AppCompatActivity() {
         return if (shift != null) {
             "${shift.workDate ?: ""} ${shiftTimeRange(shift.startTime, shift.endTime)}".trim()
         } else {
-            "대타 요청 #${req.id}"
+            "대타요청 #${req.id}"
         }
     }
 

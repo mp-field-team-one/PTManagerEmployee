@@ -41,6 +41,34 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <!-- 스케줄 탭: 근무 추가/등록 (점선 버튼) -->
+    <style name="ScheduleAddButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">16dp</item>
+        <item name="android:background">@drawable/bg_dashed</item>
+        <item name="android:textColor">@color/text_tertiary</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingVertical">14dp</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
+    <!-- 스케줄 탭: 보조 액션 (아웃라인 버튼) -->
+    <style name="ScheduleActionButton">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginTop">8dp</item>
+        <item name="android:background">@drawable/bg_btn_outline_gray</item>
+        <item name="android:textColor">@color/brand_blue</item>
+        <item name="android:textSize">13sp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingVertical">14dp</item>
+        <item name="android:foreground">?attr/selectableItemBackground</item>
+    </style>
+
     <!-- Weekly summary column -->
     <style name="SummaryCol">
         <item name="android:layout_width">0dp</item>
@@ -187,5 +215,22 @@
         <item name="android:textStyle">bold</item>
         <item name="android:paddingHorizontal">9dp</item>
         <item name="android:paddingVertical">3dp</item>
+    </style>
+
+    <style name="Bar">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:layout_marginHorizontal">3dp</item>
+        <item name="android:background">@drawable/bg_bar</item>
+    </style>
+
+    <style name="ChartDay">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_weight">1</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColor">@color/text_hint</item>
+        <item name="android:textSize">10sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

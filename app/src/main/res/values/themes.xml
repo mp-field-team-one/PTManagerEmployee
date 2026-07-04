@@ -3,6 +3,9 @@
     <style name="Base.Theme.PTManagerEmployee" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_blue</item>
         <item name="colorOnPrimary">@color/white</item>
+        <!-- 하단 탭 선택 알약(active indicator) 색 — 기본 M3 보라 대신 브랜드 블루 계열로 -->
+        <item name="colorSecondaryContainer">@color/brand_blue_chip</item>
+        <item name="colorOnSecondaryContainer">@color/brand_blue</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="android:colorBackground">@color/white</item>

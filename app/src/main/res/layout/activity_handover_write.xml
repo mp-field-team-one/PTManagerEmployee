@@ -41,6 +41,21 @@
         android:paddingHorizontal="20dp"
         android:paddingTop="14dp">
 
+        <EditText
+            android:id="@+id/input_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="14dp"
+            android:background="@drawable/bg_input"
+            android:hint="제목"
+            android:textColorHint="@color/text_hint"
+            android:textColor="@color/text_primary"
+            android:textSize="16sp"
+            android:textStyle="bold"
+            android:inputType="text"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="15dp" />
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"

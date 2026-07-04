@@ -42,12 +42,12 @@ class SubRequestActivity : AppCompatActivity() {
                 return@setOnClickListener
             }
             val reasonText = findViewById<EditText>(R.id.input_reason).text.toString().trim()
-            val reason = reasonText.ifBlank { "대타 요청합니다." }
+            val reason = reasonText.ifBlank { "대타요청합니다." }
             btn.isEnabled = false
             lifecycleScope.launch {
                 try {
                     Network.api.createSwapRequest(CreateSwapRequest(shiftId, reason))
-                    Toast.makeText(this@SubRequestActivity, "대타 요청을 보냈어요", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(this@SubRequestActivity, "대타요청을 보냈어요", Toast.LENGTH_SHORT).show()
                     finish()
                 } catch (e: Exception) {
                     Toast.makeText(this@SubRequestActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()

@@ -13,13 +13,75 @@
         android:paddingTop="16dp"
         android:paddingBottom="24dp">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="스케줄"
-            android:textColor="@color/text_primary"
-            android:textSize="15sp"
-            android:textStyle="bold" />
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="스케줄"
+                android:textColor="@color/text_primary"
+                android:textSize="18sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_this_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingHorizontal="6dp"
+                android:paddingVertical="2dp"
+                android:text="오늘"
+                android:textColor="@color/brand_blue"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+        </LinearLayout>
+
+        <!-- 주 이동 -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/btn_prev_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="‹"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+
+            <TextView
+                android:id="@+id/tv_month"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center"
+                android:text=""
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/btn_next_week"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?attr/selectableItemBackgroundBorderless"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
+                android:text="›"
+                android:textColor="@color/text_primary"
+                android:textSize="22sp" />
+        </LinearLayout>
 
         <!-- week strip -->
         <LinearLayout
@@ -29,41 +91,33 @@
             android:orientation="horizontal"
             android:baselineAligned="false">
 
-            <LinearLayout style="@style/DayCell">
+            <LinearLayout android:id="@+id/day_cell_0" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="월" />
-                <TextView style="@style/DayNum" android:text="1" />
+                <TextView android:id="@+id/day_num_0" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout style="@style/DayCell">
+            <LinearLayout android:id="@+id/day_cell_1" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="화" />
-                <TextView style="@style/DayNum" android:text="2" />
+                <TextView android:id="@+id/day_num_1" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout
-                style="@style/DayCell"
-                android:background="@drawable/bg_day_selected">
-                <TextView style="@style/DayLabel" android:text="수" android:textColor="#CFE0FF" />
-                <TextView style="@style/DayNum" android:text="3" android:textColor="@color/white" />
+            <LinearLayout android:id="@+id/day_cell_2" style="@style/DayCell">
+                <TextView style="@style/DayLabel" android:text="수" />
+                <TextView android:id="@+id/day_num_2" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout style="@style/DayCell">
+            <LinearLayout android:id="@+id/day_cell_3" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="목" />
-                <TextView style="@style/DayNum" android:text="4" />
+                <TextView android:id="@+id/day_num_3" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout style="@style/DayCell">
+            <LinearLayout android:id="@+id/day_cell_4" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="금" />
-                <TextView style="@style/DayNum" android:text="5" />
+                <TextView android:id="@+id/day_num_4" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout style="@style/DayCell">
-                <TextView style="@style/DayLabel" android:text="토" android:textColor="@color/weekend_red" />
-                <TextView style="@style/DayNum" android:text="6" />
+            <LinearLayout android:id="@+id/day_cell_5" style="@style/DayCell">
+                <TextView style="@style/DayLabel" android:text="토" android:textColor="@color/weekend_blue" />
+                <TextView android:id="@+id/day_num_5" style="@style/DayNum" android:text="" />
             </LinearLayout>
-
-            <LinearLayout style="@style/DayCell">
+            <LinearLayout android:id="@+id/day_cell_6" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="일" android:textColor="@color/weekend_red" />
-                <TextView style="@style/DayNum" android:text="7" />
+                <TextView android:id="@+id/day_num_6" style="@style/DayNum" android:text="" />
             </LinearLayout>
         </LinearLayout>
 
@@ -73,8 +127,8 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="18dp"
             android:text=""
-            android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
             android:textStyle="bold" />
 
         <!-- my shift -->
@@ -82,72 +136,78 @@
             android:id="@+id/item_my_shift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
+            android:layout_marginTop="12dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
             android:background="@drawable/bg_schedule_active"
-            android:paddingStart="15dp"
-            android:paddingEnd="12dp"
-            android:paddingVertical="12dp"
+            android:paddingStart="18dp"
+            android:paddingEnd="14dp"
+            android:paddingVertical="16dp"
             android:foreground="?attr/selectableItemBackground">
 
-            <TextView
-                android:id="@+id/tv_my_shift_time"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="@color/text_primary"
-                android:textSize="13sp"
-                android:textStyle="bold" />
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="내 근무"
+                    android:textColor="@color/brand_blue"
+                    android:textSize="11sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:id="@+id/tv_my_shift_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3dp"
+                    android:text=""
+                    android:textColor="@color/text_primary"
+                    android:textSize="17sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <TextView
                 android:id="@+id/tv_my_shift_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
+                android:layout_marginStart="8dp"
+                android:background="@drawable/bg_status_pill"
+                android:paddingHorizontal="10dp"
+                android:paddingVertical="4dp"
                 android:text=""
                 android:textColor="@color/text_secondary"
-                android:textSize="10sp" />
-        </LinearLayout>
-
-        <!-- other's shift -->
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="vertical"
-            android:background="@drawable/bg_schedule_muted"
-            android:paddingStart="15dp"
-            android:paddingEnd="12dp"
-            android:paddingVertical="12dp">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=""
-                android:textColor="#555555"
-                android:textSize="13sp"
+                android:textSize="11sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="3dp"
-                android:text=""
+                android:layout_marginStart="10dp"
+                android:text="›"
                 android:textColor="@color/text_hint"
-                android:textSize="10sp" />
+                android:textSize="20sp" />
         </LinearLayout>
 
+        <!-- 근무 없는 날 빈 상태 -->
         <TextView
+            android:id="@+id/tv_shift_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:background="@drawable/bg_dashed"
-            android:text="+ 근무 가능 시간 등록"
-            android:textColor="@color/text_tertiary"
-            android:textSize="10sp"
-            android:textStyle="bold"
             android:gravity="center"
-            android:paddingVertical="13dp"
-            android:foreground="?attr/selectableItemBackground" />
+            android:text="이 날짜에 예정된 근무가 없습니다."
+            android:textColor="@color/text_tertiary"
+            android:textSize="12sp"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/btn_availability"
+            style="@style/ScheduleAddButton"
+            android:text="+ 근무 가능 시간 등록" />
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

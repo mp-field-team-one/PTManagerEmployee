@@ -95,6 +95,7 @@ class HandoverListActivity : AppCompatActivity() {
                 notes.forEach { note ->
                     val card = inflater.inflate(R.layout.item_handover, container, false)
                     card.findViewById<TextView>(R.id.tv_category).text = handoverCategoryLabel(note.category)
+                    card.findViewById<TextView>(R.id.tv_title).text = note.title ?: ""
                     card.findViewById<TextView>(R.id.tv_content).text = note.content ?: ""
                     card.findViewById<TextView>(R.id.tv_meta).text = handoverMeta(note)
                     val delete = card.findViewById<View>(R.id.btn_delete)

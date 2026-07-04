@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/handover_list_root"
+    android:id="@+id/notice_list_root"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
@@ -28,59 +28,11 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:layout_marginStart="4dp"
-            android:text="인수인계"
+            android:text="공지사항"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />
-
-        <TextView
-            android:id="@+id/btn_write"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
-            android:background="@drawable/bg_pill_active"
-            android:text="＋ 작성"
-            android:textColor="@color/white"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="7dp"
-            android:foreground="?attr/selectableItemBackground" />
     </LinearLayout>
-
-    <HorizontalScrollView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:scrollbars="none"
-        android:paddingHorizontal="16dp"
-        android:paddingBottom="4dp">
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <TextView
-                android:id="@+id/chip_all"
-                style="@style/HandoverChip"
-                android:text="전체" />
-
-            <TextView
-                android:id="@+id/chip_stock"
-                style="@style/HandoverChip"
-                android:text="#재고" />
-
-            <TextView
-                android:id="@+id/chip_device"
-                style="@style/HandoverChip"
-                android:text="#기기오류" />
-
-            <TextView
-                android:id="@+id/chip_customer"
-                style="@style/HandoverChip"
-                android:text="#손님" />
-        </LinearLayout>
-    </HorizontalScrollView>
 
     <ScrollView
         android:layout_width="match_parent"
@@ -88,7 +40,7 @@
         android:layout_weight="1">
 
         <LinearLayout
-            android:id="@+id/handover_container"
+            android:id="@+id/notice_container"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
@@ -96,12 +48,12 @@
             android:paddingBottom="16dp">
 
             <TextView
-                android:id="@+id/tv_handover_empty"
+                android:id="@+id/tv_notice_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:padding="24dp"
                 android:gravity="center"
-                android:text="등록된 인수인계 노트가 없습니다."
+                android:text="등록된 공지가 없습니다."
                 android:textColor="@color/text_tertiary"
                 android:textSize="13sp"
                 android:visibility="gone" />

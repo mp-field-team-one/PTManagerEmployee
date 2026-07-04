@@ -27,7 +27,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="4dp"
-            android:text="대타 요청 상세"
+            android:text="대타요청 상세"
             android:textColor="@color/text_primary"
             android:textSize="16sp"
             android:textStyle="bold" />

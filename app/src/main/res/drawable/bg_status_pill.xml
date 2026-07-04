@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- 근무 카드의 상태 배지. solid 는 코드에서 backgroundTintList 로 덮어쓴다. -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+    <solid android:color="@color/white" />
+    <corners android:radius="999dp" />
+</shape>

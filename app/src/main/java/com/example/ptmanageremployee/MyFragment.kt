@@ -15,7 +15,10 @@ import com.example.ptmanageremployee.data.NotificationSettingUpdate
 import com.example.ptmanageremployee.data.Push
 import com.example.ptmanageremployee.data.TokenStore
 import com.example.ptmanageremployee.data.toUserMessage
+import com.example.ptmanageremployee.data.won
 import kotlinx.coroutines.launch
+import java.time.LocalDate
+import java.time.LocalTime
 
 class MyFragment : Fragment() {
     override fun onCreateView(
@@ -35,6 +38,8 @@ class MyFragment : Fragment() {
                 }
             }
         }
+
+        loadWeekSummary(view)
 
         view.findViewById<View>(R.id.row_profile).setOnClickListener {
             startActivity(Intent(requireContext(), ProfileEditActivity::class.java))
@@ -56,6 +61,34 @@ class MyFragment : Fragment() {
                 startActivity(i)
             }
         }
+    }
+
+    /** 이번 주(월~일) 근무 건수 · 출근 횟수 · 예상 급여를 요약 카드에 채운다. */
+    private fun loadWeekSummary(view: View) {
+        val today = LocalDate.now()
+        val monday = today.minusDays((today.dayOfWeek.value - 1).toLong())
+        val sunday = monday.plusDays(6)
+        val yearMonth = today.toString().substring(0, 7)
+        lifecycleScope.launch {
+            val shifts = runCatching {
+                Network.api.getShifts(employeeId = "me", from = monday.toString(), to = sunday.toString())
+            }.getOrNull() ?: return@launch
+            val wage = runCatching { Network.api.getMyPayroll(yearMonth).hourlyWage }.getOrDefault(0)
+            val minutes = shifts.sumOf { shiftMinutes(it.startTime, it.endTime) }
+
+            view.findViewById<TextView>(R.id.tv_sum_shifts).text = "${shifts.size}건"
+            view.findViewById<TextView>(R.id.tv_sum_checkin).text =
+                "${shifts.count { it.checkedInAt != null }}회"
+            view.findViewById<TextView>(R.id.tv_sum_pay).text = won(minutes * wage / 60)
+        }
+    }
+
+    /** startTime/endTime("HH:mm:ss") 사이 분. 종료가 시작보다 이르면 자정 넘김으로 보고 +24h. */
+    private fun shiftMinutes(start: String?, end: String?): Long {
+        val s = runCatching { LocalTime.parse(start) }.getOrNull() ?: return 0
+        val e = runCatching { LocalTime.parse(end) }.getOrNull() ?: return 0
+        val diff = java.time.Duration.between(s, e).toMinutes()
+        return if (diff < 0) diff + 24 * 60 else diff
     }
 
     /** 알림 카테고리 on/off 를 불러와 다중 선택 다이얼로그로 수정한다. */

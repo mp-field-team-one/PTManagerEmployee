@@ -27,7 +27,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="대타 요청"
+            android:text="대타요청"
             android:textColor="@color/text_primary"
             android:textSize="18sp"
             android:textStyle="bold" />

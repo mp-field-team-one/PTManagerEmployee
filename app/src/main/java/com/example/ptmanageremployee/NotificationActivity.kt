@@ -54,7 +54,7 @@ class NotificationActivity : AppCompatActivity() {
 
     private fun titleOf(n: NotificationDto): String = when (n.type) {
         "ATTENDANCE" -> "🕘 출근 알림"
-        "SWAP_REQUEST" -> "🔁 대타 요청"
+        "SWAP_REQUEST" -> "🔁 대타요청"
         "SWAP_APPLICATION" -> "🙋 대타 지원"
         "SWAP_RESULT" -> "🔁 대타 결과"
         "NOTICE" -> "📢 새 공지"

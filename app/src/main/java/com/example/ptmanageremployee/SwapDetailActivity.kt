@@ -15,7 +15,7 @@ import com.example.ptmanageremployee.data.shiftTimeRange
 import com.example.ptmanageremployee.data.toUserMessage
 import kotlinx.coroutines.launch
 
-/** 대타 요청 상세. 조회(GET /api/swap-requests/{id}) + 지원(POST .../applications). */
+/** 대타요청 상세. 조회(GET /api/swap-requests/{id}) + 지원(POST .../applications). */
 class SwapDetailActivity : AppCompatActivity() {
 
     private var swapRequestId: Long = -1
@@ -29,7 +29,7 @@ class SwapDetailActivity : AppCompatActivity() {
 
         swapRequestId = intent.getLongExtra(Extras.SWAP_REQUEST_ID, -1)
         if (swapRequestId <= 0) {
-            Toast.makeText(this, "대타 요청을 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "대타요청을 찾을 수 없습니다.", Toast.LENGTH_SHORT).show()
             finish()
             return
         }
@@ -53,7 +53,7 @@ class SwapDetailActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.tv_shift).text = if (shift != null) {
             "${shift.workDate ?: ""} ${shiftTimeRange(shift.startTime, shift.endTime)}".trim()
         } else {
-            "대타 요청 #${detail.id}"
+            "대타요청 #${detail.id}"
         }
         findViewById<TextView>(R.id.tv_status).text = "상태 · ${statusLabel(detail.status)}"
         findViewById<TextView>(R.id.tv_reason).text = detail.reason ?: "사유 없음"

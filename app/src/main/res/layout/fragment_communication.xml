@@ -16,24 +16,62 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="공지"
+            android:text="소통"
             android:textColor="@color/text_primary"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- ===== 공지 panel ===== -->
+        <!-- ===== 공지사항 구역 (헤더 = 전체 목록 진입 버튼) ===== -->
+        <LinearLayout
+            android:id="@+id/btn_notice_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:padding="6dp"
+                android:background="@drawable/bg_circle_notice"
+                android:src="@drawable/ic_megaphone"
+                android:tint="@color/cat_notice"
+                android:contentDescription="공지사항" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="공지사항"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_back"
+                android:scaleX="-1"
+                android:tint="@color/text_tertiary"
+                android:contentDescription="공지사항 전체 보기" />
+        </LinearLayout>
+
         <LinearLayout
             android:id="@+id/panel_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
+            android:layout_marginTop="2dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_notice_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
                 android:text="등록된 공지가 없습니다."
                 android:textColor="@color/text_tertiary"
@@ -41,19 +79,119 @@
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- ===== 인수인계 노트 진입 ===== -->
-        <TextView
-            android:id="@+id/btn_handover_list"
+        <!-- ===== 인수인계 구역 (헤더 = 노트 목록 진입 버튼) ===== -->
+        <LinearLayout
+            android:id="@+id/btn_handover_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/bg_btn_outline_gray"
-            android:text="인수인계 노트"
-            android:textColor="@color/text_secondary"
-            android:textSize="14sp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:paddingVertical="13dp"
-            android:foreground="?attr/selectableItemBackground" />
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:padding="6dp"
+                android:background="@drawable/bg_circle_handover"
+                android:src="@drawable/ic_person"
+                android:tint="@color/cat_handover"
+                android:contentDescription="인수인계" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="인수인계"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_back"
+                android:scaleX="-1"
+                android:tint="@color/text_tertiary"
+                android:contentDescription="인수인계 노트 전체 보기" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_handover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_handover_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="등록된 인수인계가 없습니다."
+                android:textColor="@color/text_tertiary"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
+        <!-- ===== 대타 구역 (헤더 = 구인 목록 진입 버튼) ===== -->
+        <LinearLayout
+            android:id="@+id/btn_swap_header"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="24dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical"
+            android:paddingVertical="6dp"
+            android:foreground="?attr/selectableItemBackground">
+
+            <ImageView
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:padding="6dp"
+                android:background="@drawable/bg_circle_swap"
+                android:src="@drawable/ic_swap"
+                android:tint="@color/cat_swap"
+                android:contentDescription="대타" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:layout_marginStart="8dp"
+                android:text="대타요청"
+                android:textColor="@color/text_primary"
+                android:textSize="15sp"
+                android:textStyle="bold" />
+
+            <ImageView
+                android:layout_width="20dp"
+                android:layout_height="20dp"
+                android:src="@drawable/ic_back"
+                android:scaleX="-1"
+                android:tint="@color/text_tertiary"
+                android:contentDescription="대타 구인 목록 · 지원하기" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/panel_swap"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/tv_swap_empty"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="12dp"
+                android:gravity="center"
+                android:text="지원 가능한 대타가 없습니다."
+                android:textColor="@color/text_tertiary"
+                android:textSize="12sp"
+                android:visibility="gone" />
+        </LinearLayout>
+
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

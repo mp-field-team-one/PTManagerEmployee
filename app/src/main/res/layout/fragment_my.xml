@@ -18,7 +18,7 @@
             android:layout_height="wrap_content"
             android:text="내 정보"
             android:textColor="@color/text_primary"
-            android:textSize="15sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <!-- profile header -->
@@ -86,17 +86,17 @@
                 android:baselineAligned="false">
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="" />
+                    <TextView android:id="@+id/tv_sum_shifts" style="@style/SummaryNum" android:text="—" />
                     <TextView style="@style/SummaryLabel" android:text="근무" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="" />
+                    <TextView android:id="@+id/tv_sum_checkin" style="@style/SummaryNum" android:text="—" />
                     <TextView style="@style/SummaryLabel" android:text="출근" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView style="@style/SummaryNum" android:text="" />
+                    <TextView android:id="@+id/tv_sum_pay" style="@style/SummaryNum" android:text="—" />
                     <TextView style="@style/SummaryLabel" android:text="예상 급여" />
                 </LinearLayout>
             </LinearLayout>

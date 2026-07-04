@@ -42,9 +42,15 @@ class HandoverWriteActivity : AppCompatActivity() {
         }
         renderChips()
 
+        val titleInput = findViewById<EditText>(R.id.input_title)
         val contentInput = findViewById<EditText>(R.id.input_content)
         findViewById<View>(R.id.btn_publish).setOnClickListener { btn ->
+            val title = titleInput.text.toString().trim()
             val content = contentInput.text.toString().trim()
+            if (title.isEmpty()) {
+                Toast.makeText(this, "제목을 입력해 주세요.", Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
             if (content.isEmpty()) {
                 Toast.makeText(this, "내용을 입력해 주세요.", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
@@ -58,7 +64,7 @@ class HandoverWriteActivity : AppCompatActivity() {
             lifecycleScope.launch {
                 try {
                     Network.api.createHandover(
-                        CreateHandoverRequest(workplaceId, selectedCategory, content),
+                        CreateHandoverRequest(workplaceId, selectedCategory, title, content),
                     )
                     Toast.makeText(this@HandoverWriteActivity, "등록했어요", Toast.LENGTH_SHORT).show()
                     finish()

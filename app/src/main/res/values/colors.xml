@@ -27,8 +27,17 @@
     <color name="accent_green">#16A34A</color>
     <color name="accent_red">#E03131</color>
     <color name="weekend_red">#FF0066</color>
+    <color name="weekend_blue">#2F6BFF</color>
     <color name="surface_gray">#F7F8FA</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
+
+    <!-- 소식 카테고리 색 (직원·사장 앱 공통) -->
+    <color name="cat_notice">#3182F6</color>
+    <color name="cat_notice_bg">#EAF2FE</color>
+    <color name="cat_handover">#16A34A</color>
+    <color name="cat_handover_bg">#E7F6EC</color>
+    <color name="cat_swap">#F59E0B</color>
+    <color name="cat_swap_bg">#FEF3E2</color>
 </resources>
