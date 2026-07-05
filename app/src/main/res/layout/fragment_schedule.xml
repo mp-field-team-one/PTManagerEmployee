@@ -1,61 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fillViewport="true">
+    android:background="@color/surface_gray"
+    android:fillViewport="true"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="스케줄"
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textSize="22sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/btn_this_week"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingHorizontal="6dp"
-                android:paddingVertical="2dp"
+                android:background="@drawable/bg_schedule_month_pill"
+                android:foreground="?attr/selectableItemBackgroundBorderless"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="7dp"
                 android:text="오늘"
                 android:textColor="@color/brand_blue"
                 android:textSize="12sp"
                 android:textStyle="bold" />
         </LinearLayout>
 
-        <!-- 주 이동 -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_marginTop="16dp"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/btn_prev_week"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:gravity="center"
                 android:text="‹"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp" />
@@ -73,23 +74,24 @@
 
             <TextView
                 android:id="@+id/btn_next_week"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:background="?attr/selectableItemBackgroundBorderless"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:gravity="center"
                 android:text="›"
                 android:textColor="@color/text_primary"
                 android:textSize="22sp" />
         </LinearLayout>
 
-        <!-- week strip -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="14dp"
+            android:background="@drawable/bg_schedule_week_card"
+            android:baselineAligned="false"
             android:orientation="horizontal"
-            android:baselineAligned="false">
+            android:paddingHorizontal="8dp"
+            android:paddingVertical="10dp">
 
             <LinearLayout android:id="@+id/day_cell_0" style="@style/DayCell">
                 <TextView style="@style/DayLabel" android:text="월" />
@@ -125,25 +127,23 @@
             android:id="@+id/tv_schedule_date"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
+            android:layout_marginTop="28dp"
             android:text=""
             android:textColor="@color/text_primary"
-            android:textSize="13sp"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
-        <!-- my shift -->
         <LinearLayout
             android:id="@+id/item_my_shift"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="12dp"
-            android:orientation="horizontal"
+            android:background="@drawable/bg_schedule_shift_card"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:background="@drawable/bg_schedule_active"
-            android:paddingStart="18dp"
-            android:paddingEnd="14dp"
-            android:paddingVertical="16dp"
-            android:foreground="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="18dp">
 
             <LinearLayout
                 android:layout_width="0dp"
@@ -156,17 +156,17 @@
                     android:layout_height="wrap_content"
                     android:text="내 근무"
                     android:textColor="@color/brand_blue"
-                    android:textSize="11sp"
+                    android:textSize="12sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_my_shift_time"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="8dp"
                     android:text=""
                     android:textColor="@color/text_primary"
-                    android:textSize="17sp"
+                    android:textSize="20sp"
                     android:textStyle="bold" />
             </LinearLayout>
 
@@ -174,40 +174,42 @@
                 android:id="@+id/tv_my_shift_sub"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="10dp"
                 android:background="@drawable/bg_status_pill"
-                android:paddingHorizontal="10dp"
-                android:paddingVertical="4dp"
+                android:paddingHorizontal="11dp"
+                android:paddingVertical="5dp"
                 android:text=""
                 android:textColor="@color/text_secondary"
                 android:textSize="11sp"
                 android:textStyle="bold" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:text="›"
-                android:textColor="@color/text_hint"
-                android:textSize="20sp" />
         </LinearLayout>
 
-        <!-- 근무 없는 날 빈 상태 -->
         <TextView
             android:id="@+id/tv_shift_empty"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="12dp"
+            android:background="@drawable/bg_schedule_empty_card"
             android:gravity="center"
-            android:text="이 날짜에 예정된 근무가 없습니다."
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="24dp"
+            android:text="이 날짜에는 예정된 근무가 없습니다."
             android:textColor="@color/text_tertiary"
-            android:textSize="12sp"
+            android:textSize="13sp"
             android:visibility="gone" />
 
         <TextView
             android:id="@+id/btn_availability"
-            style="@style/ScheduleAddButton"
-            android:text="+ 근무 가능 시간 등록" />
+            android:layout_width="match_parent"
+            android:layout_height="52dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_schedule_availability"
+            android:foreground="?attr/selectableItemBackground"
+            android:gravity="center"
+            android:text="+ 근무 가능 시간 등록"
+            android:textColor="@color/text_tertiary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
 
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

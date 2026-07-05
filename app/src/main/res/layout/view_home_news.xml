@@ -5,11 +5,15 @@
   타입별 색상 아이콘 + 우측 상대 시각으로 구분.
 -->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical"
-    android:background="@drawable/bg_card"
-    android:paddingHorizontal="14dp">
+    android:background="@drawable/bg_home_news_card"
+    android:paddingHorizontal="14dp"
+    android:paddingVertical="2dp"
+    tools:ignore="HardcodedText">
 
     <!-- 공지 -->
     <LinearLayout
@@ -27,7 +31,7 @@
             android:padding="8dp"
             android:background="@drawable/bg_circle_notice"
             android:src="@drawable/ic_megaphone"
-            android:tint="@color/cat_notice"
+            app:tint="@color/cat_notice"
             android:contentDescription="공지" />
 
         <LinearLayout
@@ -107,7 +111,7 @@
             android:padding="8dp"
             android:background="@drawable/bg_circle_handover"
             android:src="@drawable/ic_person"
-            android:tint="@color/cat_handover"
+            app:tint="@color/cat_handover"
             android:contentDescription="인수인계" />
 
         <LinearLayout
@@ -187,7 +191,7 @@
             android:padding="8dp"
             android:background="@drawable/bg_circle_swap"
             android:src="@drawable/ic_swap"
-            android:tint="@color/cat_swap"
+            app:tint="@color/cat_swap"
             android:contentDescription="대타요청" />
 
         <LinearLayout

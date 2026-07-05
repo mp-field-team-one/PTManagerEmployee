@@ -1,121 +1,128 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fillViewport="true">
+    android:background="@color/surface_gray"
+    android:fillViewport="true"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="소통"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- ===== 공지사항 구역 (헤더 = 전체 목록 진입 버튼) ===== -->
         <LinearLayout
             android:id="@+id/btn_notice_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_home_news_card"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:paddingVertical="6dp"
-            android:foreground="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="6dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="@drawable/bg_circle_notice"
+                android:contentDescription="공지사항"
+                android:padding="8dp"
                 android:src="@drawable/ic_megaphone"
-                android:tint="@color/cat_notice"
-                android:contentDescription="공지사항" />
+                app:tint="@color/cat_notice" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
                 android:text="공지사항"
                 android:textColor="@color/text_primary"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_back"
+                android:contentDescription="공지사항 전체 보기"
                 android:scaleX="-1"
-                android:tint="@color/text_tertiary"
-                android:contentDescription="공지사항 전체 보기" />
+                android:src="@drawable/ic_back"
+                app:tint="@color/text_tertiary" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/panel_notice"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_notice_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_home_news_card"
                 android:gravity="center"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="22dp"
                 android:text="등록된 공지가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- ===== 인수인계 구역 (헤더 = 노트 목록 진입 버튼) ===== -->
         <LinearLayout
             android:id="@+id/btn_handover_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_home_news_card"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:paddingVertical="6dp"
-            android:foreground="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="6dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="@drawable/bg_circle_handover"
+                android:contentDescription="인수인계"
+                android:padding="8dp"
                 android:src="@drawable/ic_person"
-                android:tint="@color/cat_handover"
-                android:contentDescription="인수인계" />
+                app:tint="@color/cat_handover" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
                 android:text="인수인계"
                 android:textColor="@color/text_primary"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_back"
+                android:contentDescription="인수인계 전체 보기"
                 android:scaleX="-1"
-                android:tint="@color/text_tertiary"
-                android:contentDescription="인수인계 노트 전체 보기" />
+                android:src="@drawable/ic_back"
+                app:tint="@color/text_tertiary" />
         </LinearLayout>
 
         <LinearLayout
@@ -128,51 +135,55 @@
                 android:id="@+id/tv_handover_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_home_news_card"
                 android:gravity="center"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="22dp"
                 android:text="등록된 인수인계가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- ===== 대타 구역 (헤더 = 구인 목록 진입 버튼) ===== -->
         <LinearLayout
             android:id="@+id/btn_swap_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:orientation="horizontal"
+            android:layout_marginTop="18dp"
+            android:background="@drawable/bg_home_news_card"
+            android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
-            android:paddingVertical="6dp"
-            android:foreground="?attr/selectableItemBackground">
+            android:orientation="horizontal"
+            android:paddingHorizontal="16dp"
+            android:paddingVertical="14dp">
 
             <ImageView
-                android:layout_width="26dp"
-                android:layout_height="26dp"
-                android:padding="6dp"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
                 android:background="@drawable/bg_circle_swap"
+                android:contentDescription="대타요청"
+                android:padding="8dp"
                 android:src="@drawable/ic_swap"
-                android:tint="@color/cat_swap"
-                android:contentDescription="대타" />
+                app:tint="@color/cat_swap" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="12dp"
                 android:layout_weight="1"
-                android:layout_marginStart="8dp"
                 android:text="대타요청"
                 android:textColor="@color/text_primary"
-                android:textSize="15sp"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <ImageView
                 android:layout_width="20dp"
                 android:layout_height="20dp"
-                android:src="@drawable/ic_back"
+                android:contentDescription="대타요청 전체 보기"
                 android:scaleX="-1"
-                android:tint="@color/text_tertiary"
-                android:contentDescription="대타 구인 목록 · 지원하기" />
+                android:src="@drawable/ic_back"
+                app:tint="@color/text_tertiary" />
         </LinearLayout>
 
         <LinearLayout
@@ -185,13 +196,15 @@
                 android:id="@+id/tv_swap_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="12dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_home_news_card"
                 android:gravity="center"
+                android:paddingHorizontal="18dp"
+                android:paddingVertical="22dp"
                 android:text="지원 가능한 대타가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:visibility="gone" />
         </LinearLayout>
-
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

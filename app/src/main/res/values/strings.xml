@@ -5,4 +5,21 @@
     <string name="nav_communication">소통</string>
     <string name="nav_stats">급여</string>
     <string name="nav_my">내 정보</string>
+    <string name="home_default_user">사용자</string>
+    <string name="home_greeting">안녕하세요, %1$s님</string>
+    <string name="home_bell_desc">알림</string>
+    <string name="home_detail_view">상세 보기</string>
+    <string name="home_checkin_action">출근하기</string>
+    <string name="home_no_notice">등록된 공지가 없습니다.</string>
+    <string name="common_no_title">(제목 없음)</string>
+    <string name="home_no_handover">등록된 인수인계가 없습니다.</string>
+    <string name="home_no_swap_request">지원 가능한 대타요청이 없습니다.</string>
+    <string name="home_swap_request_number">대타요청 #%1$d</string>
+    <string name="home_no_reason">사유 없음</string>
+    <string name="home_no_shift_label">오늘 근무 없음</string>
+    <string name="home_no_shift_time">—</string>
+    <string name="home_no_shift_desc">오늘은 예정된 근무가 없어요.</string>
+    <string name="home_today_shift">오늘 근무</string>
+    <string name="home_checkin_done">출근 완료</string>
+    <string name="home_before_checkin">아직 출근 전이에요.</string>
 </resources>

@@ -1,3 +1,5 @@
+@file:Suppress("HardcodedStringLiteral")
+
 package com.example.ptmanageremployee
 
 import android.content.Intent
@@ -33,7 +35,7 @@ class HomeFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_home, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<TextView>(R.id.tv_greeting).text = "안녕하세요, ${TokenStore.name ?: "사용자"}님"
+        view.findViewById<TextView>(R.id.tv_greeting).text = getString(R.string.home_greeting, TokenStore.name ?: getString(R.string.home_default_user))
 
         view.findViewById<View>(R.id.btn_checkin).setOnClickListener {
             startActivity(shiftIntent(CheckInActivity::class.java))
@@ -65,7 +67,7 @@ class HomeFragment : Fragment() {
         loadDashboard(view)
     }
 
-    /** 이번 주 근무 요약 · 대타 지원 현황 · 최신 공지 등을 병렬 로드한다(서로 의존 없음 → 첫 화면 지연 최소화). */
+    /** 이번 주 근무 요약, 대타 지원 현황, 최신 소식, 알림 뱃지를 로드한다. */
     private fun loadDashboard(view: View) {
         lifecycleScope.launch {
             listOf(
@@ -98,7 +100,6 @@ class HomeFragment : Fragment() {
     }
 
     /** startTime/endTime("HH:mm:ss") 사이 분. 종료가 시작보다 이르면 자정 넘김으로 보고 +24h. */
-    // ponytail: 시각만 계산(날짜 무시). 여러 날 걸치는 근무가 생기면 workDate까지 파싱 필요.
     private fun shiftMinutes(start: String?, end: String?): Long {
         val s = runCatching { LocalTime.parse(start) }.getOrNull() ?: return 0
         val e = runCatching { LocalTime.parse(end) }.getOrNull() ?: return 0
@@ -129,10 +130,10 @@ class HomeFragment : Fragment() {
         }.getOrNull()
         view.findViewById<TextView>(R.id.tv_notice_time).text = relativeTime(notice?.createdAt)
         if (notice == null) {
-            titleView.text = "등록된 공지가 없습니다."
+            titleView.text = getString(R.string.home_no_notice)
             bodyView.text = ""
         } else {
-            titleView.text = notice.title ?: "(제목 없음)"
+            titleView.text = notice.title ?: getString(R.string.common_no_title)
             bodyView.text = notice.body ?: ""
         }
     }
@@ -147,10 +148,10 @@ class HomeFragment : Fragment() {
         }.getOrNull()
         view.findViewById<TextView>(R.id.tv_handover_time).text = relativeTime(handover?.createdAt)
         if (handover == null) {
-            titleView.text = "등록된 인수인계가 없습니다."
+            titleView.text = getString(R.string.home_no_handover)
             contentView.text = ""
         } else {
-            titleView.text = handover.title ?: "(제목 없음)"
+            titleView.text = handover.title ?: getString(R.string.common_no_title)
             contentView.text = handover.content ?: ""
         }
     }
@@ -165,14 +166,14 @@ class HomeFragment : Fragment() {
         }.getOrNull()
         view.findViewById<TextView>(R.id.tv_swap_req_time).text = relativeTime(req?.createdAt)
         if (req == null) {
-            titleView.text = "지원 가능한 대타요청이 없습니다."
+            titleView.text = getString(R.string.home_no_swap_request)
             subView.text = ""
         } else {
             val shift = req.shift
             titleView.text = if (shift != null)
                 "${shift.workDate ?: ""} ${shiftTimeRange(shift.startTime, shift.endTime)}".trim()
-            else "대타요청 #${req.id}"
-            subView.text = req.reason ?: "사유 없음"
+            else getString(R.string.home_swap_request_number, req.id)
+            subView.text = req.reason ?: getString(R.string.home_no_reason)
         }
     }
 
@@ -194,16 +195,16 @@ class HomeFragment : Fragment() {
                 val shifts = Network.api.getShifts(employeeId = "me", from = today, to = today)
                 val shift: ShiftDto? = shifts.firstOrNull()
                 if (shift == null) {
-                    labelView.text = "오늘 근무 없음"
-                    timeView.text = "—"
-                    withView.text = "오늘은 예정된 근무가 없어요."
+                    labelView.text = getString(R.string.home_no_shift_label)
+                    timeView.text = getString(R.string.home_no_shift_time)
+                    withView.text = getString(R.string.home_no_shift_desc)
                     todayShiftId = -1
                     chevronView.visibility = View.GONE
                 } else {
                     todayShiftId = shift.id
-                    labelView.text = "오늘 근무"
+                    labelView.text = getString(R.string.home_today_shift)
                     timeView.text = shiftTimeRange(shift.startTime, shift.endTime)
-                    withView.text = shift.checkedInAt?.let { "출근 완료" } ?: "아직 출근 전이에요."
+                    withView.text = shift.checkedInAt?.let { getString(R.string.home_checkin_done) } ?: getString(R.string.home_before_checkin)
                     chevronView.visibility = View.VISIBLE
                 }
             } catch (e: Exception) {

@@ -1,19 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fillViewport="true">
+    android:background="@color/surface_gray"
+    android:fillViewport="true"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
 
-        <!-- greeting + role chip -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -26,146 +28,126 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text=""
-                android:textColor="@color/text_primary"
-                android:textSize="18sp"
+                android:textColor="@color/black"
+                android:textSize="20sp"
                 android:textStyle="bold" />
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_pill"
-                android:text="알바 ▾"
-                android:textColor="@color/brand_blue"
-                android:textSize="11sp"
-                android:textStyle="bold"
-                android:paddingHorizontal="11dp"
-                android:paddingVertical="6dp" />
-
             <FrameLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="6dp">
+                android:layout_width="42dp"
+                android:layout_height="42dp">
 
                 <ImageView
                     android:id="@+id/btn_bell"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:padding="8dp"
+                    android:layout_width="42dp"
+                    android:layout_height="42dp"
+                    android:padding="9dp"
                     android:src="@drawable/ic_bell"
+                    app:tint="@color/black"
                     android:background="?attr/selectableItemBackgroundBorderless"
-                    android:contentDescription="알림" />
+                    android:contentDescription="@string/home_bell_desc" />
 
                 <View
                     android:id="@+id/bell_dot"
                     android:layout_width="9dp"
                     android:layout_height="9dp"
                     android:layout_gravity="top|end"
-                    android:layout_marginTop="7dp"
-                    android:layout_marginEnd="7dp"
+                    android:layout_marginTop="8dp"
+                    android:layout_marginEnd="8dp"
                     android:background="@drawable/bg_dot_red"
                     android:visibility="gone" />
             </FrameLayout>
         </LinearLayout>
 
-        <!-- today work card -->
         <LinearLayout
             android:id="@+id/card_today"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="22dp"
             android:orientation="vertical"
-            android:background="@drawable/bg_today_card"
-            android:padding="18dp"
+            android:background="@drawable/bg_home_today_card"
+            android:paddingHorizontal="24dp"
+            android:paddingTop="24dp"
+            android:paddingBottom="24dp"
             android:foreground="?attr/selectableItemBackground">
 
-            <LinearLayout
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/tv_today_label"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <TextView
-                    android:id="@+id/tv_today_label"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text=""
-                    android:textColor="@color/brand_blue_border"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-
-                <TextView
-                    android:id="@+id/tv_today_chevron"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:text="상세 보기 ›"
-                    android:textColor="@color/white"
-                    android:textSize="11sp"
-                    android:textStyle="bold" />
-            </LinearLayout>
+                android:text=""
+                android:textColor="@color/brand_blue_border"
+                android:textSize="13sp"
+                android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_today_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="12dp"
                 android:text=""
                 android:textColor="@color/white"
-                android:textSize="26sp"
+                android:textSize="28sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_today_with"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
+                android:layout_marginTop="10dp"
                 android:text=""
                 android:textColor="@color/brand_blue_border"
-                android:textSize="12sp" />
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/tv_today_chevron"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"
+                android:text="@string/home_detail_view"
+                android:textColor="@color/white"
+                android:textSize="1sp" />
 
             <TextView
                 android:id="@+id/btn_checkin"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="16dp"
-                android:background="@drawable/bg_btn_white"
-                android:text="출근하기"
+                android:layout_height="50dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/bg_home_checkin"
+                android:text="@string/home_checkin_action"
                 android:textColor="@color/brand_blue"
-                android:textSize="14sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:paddingVertical="12dp"
                 android:foreground="?attr/selectableItemBackground" />
         </LinearLayout>
 
-        <!-- this week summary (탭 시 스케줄 탭으로 이동) + swap status -->
         <LinearLayout
             android:id="@+id/card_week"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/bg_home_news_card"
+            android:foreground="?attr/selectableItemBackground"
             android:orientation="vertical"
-            android:background="@drawable/bg_card"
-            android:padding="14dp"
-            android:foreground="?attr/selectableItemBackground">
+            android:paddingHorizontal="18dp"
+            android:paddingVertical="16dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이번 주"
                 android:textColor="@color/text_tertiary"
-                android:textSize="11sp"
+                android:textSize="12sp"
                 android:textStyle="bold" />
 
             <TextView
                 android:id="@+id/tv_week_summary"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
+                android:layout_marginTop="8dp"
                 android:text="—"
                 android:textColor="@color/text_primary"
-                android:textSize="17sp"
+                android:textSize="18sp"
                 android:textStyle="bold" />
 
             <TextView
@@ -173,22 +155,21 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
+                android:foreground="?attr/selectableItemBackground"
+                android:paddingVertical="4dp"
                 android:text=""
                 android:textColor="@color/text_secondary"
-                android:textSize="12sp"
-                android:paddingVertical="4dp"
-                android:foreground="?attr/selectableItemBackground"
+                android:textSize="13sp"
                 android:visibility="gone" />
         </LinearLayout>
 
-        <!-- news feed: 공지 · 인수인계 · 대타요청 -->
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="30dp"
             android:text="소식"
-            android:textColor="#444444"
-            android:textSize="13sp"
+            android:textColor="@color/text_primary"
+            android:textSize="17sp"
             android:textStyle="bold" />
 
         <include
@@ -196,6 +177,6 @@
             layout="@layout/view_home_news"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp" />
+            android:layout_marginTop="12dp" />
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>

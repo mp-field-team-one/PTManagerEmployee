@@ -1,44 +1,47 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/white"
-    android:fillViewport="true">
+    android:background="@color/surface_gray"
+    android:fillViewport="true"
+    tools:ignore="HardcodedText">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingHorizontal="16dp"
-        android:paddingTop="16dp"
-        android:paddingBottom="24dp">
+        android:paddingHorizontal="24dp"
+        android:paddingTop="36dp"
+        android:paddingBottom="28dp">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="내 정보"
-            android:textColor="@color/text_primary"
-            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textSize="22sp"
             android:textStyle="bold" />
 
-        <!-- profile header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
+            android:layout_marginTop="22dp"
+            android:background="@drawable/bg_home_news_card"
+            android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:padding="18dp">
 
             <View
-                android:layout_width="52dp"
-                android:layout_height="52dp"
+                android:layout_width="54dp"
+                android:layout_height="54dp"
                 android:background="@drawable/bg_circle_blue" />
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
                 android:layout_marginStart="14dp"
+                android:layout_weight="1"
                 android:orientation="vertical">
 
                 <TextView
@@ -47,75 +50,101 @@
                     android:layout_height="wrap_content"
                     android:text=""
                     android:textColor="@color/text_primary"
-                    android:textSize="17sp"
+                    android:textSize="19sp"
                     android:textStyle="bold" />
 
                 <TextView
                     android:id="@+id/tv_my_sub"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="3dp"
+                    android:layout_marginTop="5dp"
                     android:text=""
                     android:textColor="@color/text_tertiary"
-                    android:textSize="12sp" />
+                    android:textSize="13sp" />
             </LinearLayout>
         </LinearLayout>
 
-        <!-- weekly summary -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            android:background="@drawable/bg_home_news_card"
             android:orientation="vertical"
-            android:background="@drawable/bg_soft_gray"
-            android:padding="14dp">
+            android:padding="18dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="이번 주 요약"
-                android:textColor="@color/text_tertiary"
-                android:textSize="10sp"
+                android:textColor="@color/text_primary"
+                android:textSize="16sp"
                 android:textStyle="bold" />
 
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:layout_marginTop="14dp"
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView android:id="@+id/tv_sum_shifts" style="@style/SummaryNum" android:text="—" />
-                    <TextView style="@style/SummaryLabel" android:text="근무" />
+                    <TextView
+                        android:id="@+id/tv_sum_shifts"
+                        style="@style/SummaryNum"
+                        android:text="—" />
+                    <TextView
+                        style="@style/SummaryLabel"
+                        android:text="근무" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView android:id="@+id/tv_sum_checkin" style="@style/SummaryNum" android:text="—" />
-                    <TextView style="@style/SummaryLabel" android:text="출근" />
+                    <TextView
+                        android:id="@+id/tv_sum_checkin"
+                        style="@style/SummaryNum"
+                        android:text="—" />
+                    <TextView
+                        style="@style/SummaryLabel"
+                        android:text="출근" />
                 </LinearLayout>
 
                 <LinearLayout style="@style/SummaryCol">
-                    <TextView android:id="@+id/tv_sum_pay" style="@style/SummaryNum" android:text="—" />
-                    <TextView style="@style/SummaryLabel" android:text="예상 급여" />
+                    <TextView
+                        android:id="@+id/tv_sum_pay"
+                        style="@style/SummaryNum"
+                        android:text="—" />
+                    <TextView
+                        style="@style/SummaryLabel"
+                        android:text="예상 급여" />
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
-        <!-- menu rows -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:orientation="vertical"
-            android:background="@drawable/bg_card"
+            android:background="@drawable/bg_home_news_card"
             android:divider="@drawable/divider_line"
+            android:orientation="vertical"
             android:showDividers="middle">
 
-            <TextView android:id="@+id/row_profile" style="@style/MenuRow" android:text="프로필 수정" />
-            <TextView android:id="@+id/row_members" style="@style/MenuRow" android:text="매장 멤버 목록" />
-            <TextView android:id="@+id/row_noti" style="@style/MenuRow" android:text="알림 설정" />
-            <TextView android:id="@+id/row_logout" style="@style/MenuRow" android:text="로그아웃" android:textColor="@color/accent_red" />
+            <TextView
+                android:id="@+id/row_profile"
+                style="@style/MenuRow"
+                android:text="프로필 수정" />
+            <TextView
+                android:id="@+id/row_members"
+                style="@style/MenuRow"
+                android:text="매장 멤버 목록" />
+            <TextView
+                android:id="@+id/row_noti"
+                style="@style/MenuRow"
+                android:text="알림 설정" />
+            <TextView
+                android:id="@+id/row_logout"
+                style="@style/MenuRow"
+                android:text="로그아웃"
+                android:textColor="@color/accent_red" />
         </LinearLayout>
     </LinearLayout>
 </androidx.core.widget.NestedScrollView>
