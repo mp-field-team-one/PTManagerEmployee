@@ -61,8 +61,9 @@ class SubRequestActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val shift = Network.api.getShift(shiftId)
-                findViewById<TextView>(R.id.tv_shift_summary).text =
-                    "${shift.workDate ?: ""} ${shiftTimeRange(shift.startTime, shift.endTime)}"
+                findViewById<TextView>(R.id.tv_shift_summary).text = shift.workDate ?: ""
+                findViewById<TextView>(R.id.tv_shift_time).text =
+                    shiftTimeRange(shift.startTime, shift.endTime)
             } catch (_: Exception) {
             }
         }
