@@ -53,40 +53,23 @@
 
             <LinearLayout style="@style/DetailRow">
                 <TextView style="@style/DetailKey" android:text="근무지" />
-                <TextView style="@style/DetailVal" android:text="" />
-            </LinearLayout>
-
-            <View style="@style/DetailDivider" />
-
-            <LinearLayout style="@style/DetailRow">
-                <TextView style="@style/DetailKey" android:text="포지션" />
-                <TextView style="@style/DetailVal" android:text="" />
+                <TextView android:id="@+id/tv_workplace" style="@style/DetailVal" android:text="-" />
             </LinearLayout>
 
             <View style="@style/DetailDivider" />
 
             <LinearLayout style="@style/DetailRow">
                 <TextView style="@style/DetailKey" android:text="함께 근무" />
-                <TextView style="@style/DetailVal" android:text="" />
+                <TextView android:id="@+id/tv_coworkers" style="@style/DetailVal" android:text="-" />
             </LinearLayout>
 
             <View style="@style/DetailDivider" />
 
             <LinearLayout style="@style/DetailRow">
                 <TextView style="@style/DetailKey" android:text="예상 급여" />
-                <TextView style="@style/DetailVal" android:text="" />
+                <TextView android:id="@+id/tv_pay" style="@style/DetailVal" android:text="-" />
             </LinearLayout>
         </LinearLayout>
-
-        <TextView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="@drawable/bg_soft_gray"
-            android:text=""
-            android:textColor="@color/text_secondary"
-            android:textSize="11sp"
-            android:padding="11dp" />
 
         <TextView
             android:id="@+id/btn_sub_request"

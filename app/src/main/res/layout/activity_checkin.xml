@@ -48,12 +48,13 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="위치 확인됨"
+                android:text="매장 QR 인증"
                 android:textColor="@color/brand_blue"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
             <TextView
+                android:id="@+id/tv_checkin_workplace"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="4dp"
@@ -61,23 +62,6 @@
                 android:textColor="@color/text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="24dp"
-            android:text=""
-            android:textColor="@color/text_primary"
-            android:textSize="32sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="2dp"
-            android:text=""
-            android:textColor="@color/text_hint"
-            android:textSize="11sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -104,7 +88,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="GPS · QR 둘 다 지원"
+            android:text="매장 QR을 스캔해 출퇴근합니다"
             android:textColor="@color/text_hint"
             android:textSize="11sp"
             android:gravity="center" />

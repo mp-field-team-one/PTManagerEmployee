@@ -78,6 +78,10 @@ data class ShiftDto(
     val attendanceStatus: String? = null,
     val createdAt: String? = null,
     val updatedAt: String? = null,
+    // 상세 조회에서만 내려온다 (목록에서는 null).
+    val workplaceName: String? = null,
+    val coworkers: List<String>? = null,
+    val estimatedPay: Int? = null,
 )
 
 data class CheckInRequest(

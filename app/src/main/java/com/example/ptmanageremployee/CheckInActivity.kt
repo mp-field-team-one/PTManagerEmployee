@@ -88,6 +88,7 @@ class CheckInActivity : AppCompatActivity() {
                 val shift = Network.api.getShift(shiftId)
                 findViewById<TextView>(R.id.tv_checkin_shift).text =
                     "${shift.workDate ?: ""} · ${shiftTimeRange(shift.startTime, shift.endTime)} 근무"
+                findViewById<TextView>(R.id.tv_checkin_workplace).text = shift.workplaceName ?: ""
                 mode = when {
                     shift.checkedOutAt != null -> Mode.DONE
                     shift.checkedInAt != null -> Mode.CHECK_OUT

@@ -43,6 +43,11 @@ class ShiftDetailActivity : AppCompatActivity() {
                 findViewById<TextView>(R.id.tv_date).text = shift.workDate ?: ""
                 findViewById<TextView>(R.id.tv_time).text =
                     shiftTimeRange(shift.startTime, shift.endTime)
+                findViewById<TextView>(R.id.tv_workplace).text = shift.workplaceName ?: "-"
+                findViewById<TextView>(R.id.tv_coworkers).text =
+                    shift.coworkers?.takeIf { it.isNotEmpty() }?.joinToString(", ") ?: "혼자 근무"
+                findViewById<TextView>(R.id.tv_pay).text =
+                    shift.estimatedPay?.let { "%,d원".format(it) } ?: "-"
             } catch (e: Exception) {
                 Toast.makeText(this@ShiftDetailActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()
             }
