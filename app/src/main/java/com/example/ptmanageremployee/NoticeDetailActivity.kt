@@ -1,10 +1,12 @@
 package com.example.ptmanageremployee
 
-import android.content.Intent
+import android.app.DownloadManager
+import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -80,15 +82,30 @@ class NoticeDetailActivity : AppCompatActivity() {
                 setTextColor(getColor(R.color.brand_blue))
                 val top = (8 * resources.displayMetrics.density).toInt()
                 setPadding(0, top, 0, 0)
-                setOnClickListener {
-                    runCatching {
-                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl)))
-                    }.onFailure {
-                        Toast.makeText(this@NoticeDetailActivity, "파일을 열 수 없습니다.", Toast.LENGTH_SHORT).show()
-                    }
-                }
+                setOnClickListener { downloadFile(fileUrl, fileName) }
             }
             container.addView(link)
+        }
+    }
+
+    /** 첨부파일을 기기의 '다운로드' 폴더로 내려받는다(완료 시 알림 표시). */
+    private fun downloadFile(fileUrl: String, fileName: String) {
+        val uri = runCatching { Uri.parse(fileUrl) }.getOrNull()
+        if (uri == null || uri.scheme !in setOf("http", "https")) {
+            Toast.makeText(this, "다운로드할 수 없는 파일입니다.", Toast.LENGTH_SHORT).show()
+            return
+        }
+        try {
+            val request = DownloadManager.Request(uri).apply {
+                setTitle(fileName)
+                setDescription("첨부파일 다운로드 중…")
+                setNotificationVisibility(DownloadManager.Request.VISIBILITY_VISIBLE_NOTIFY_COMPLETED)
+                setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
+            }
+            (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
+            Toast.makeText(this, "다운로드를 시작합니다.", Toast.LENGTH_SHORT).show()
+        } catch (e: Exception) {
+            Toast.makeText(this, "다운로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
         }
     }
 
