@@ -1,16 +1,26 @@
 package com.example.ptmanageremployee
 
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Extras
+import com.example.ptmanageremployee.data.NoticeAttachmentDto
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.toUserMessage
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.net.URL
 
 class NoticeDetailActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,8 +43,67 @@ class NoticeDetailActivity : AppCompatActivity() {
                     listOfNotNull(notice.authorName, notice.createdAt?.replace("T", " ")?.take(16))
                         .joinToString(" · ")
                 findViewById<TextView>(R.id.tv_body).text = notice.body ?: ""
+                renderAttachments(notice.attachments.orEmpty())
             } catch (e: Exception) {
                 Toast.makeText(this@NoticeDetailActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private val imageExtensions = setOf("jpg", "jpeg", "png", "gif", "webp", "bmp")
+
+    /** 공지 첨부파일을 상세 화면에 그린다. 이미지면 썸네일을, 그 외엔 파일명 링크를 표시한다. */
+    private fun renderAttachments(attachments: List<NoticeAttachmentDto>) {
+        val container = findViewById<LinearLayout>(R.id.attachments_container)
+        container.removeAllViews()
+        attachments.forEach { attachment ->
+            val fileUrl = attachment.fileUrl ?: return@forEach
+            val fileName = Uri.parse(fileUrl).lastPathSegment?.substringAfterLast('-') ?: "첨부파일"
+            val extension = fileName.substringAfterLast('.', "").lowercase()
+
+            if (extension in imageExtensions) {
+                val imageView = ImageView(this).apply {
+                    layoutParams = LinearLayout.LayoutParams(
+                        LinearLayout.LayoutParams.MATCH_PARENT,
+                        (200 * resources.displayMetrics.density).toInt(),
+                    ).also { it.topMargin = (8 * resources.displayMetrics.density).toInt() }
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                    adjustViewBounds = true
+                }
+                container.addView(imageView)
+                loadThumbnail(fileUrl, imageView)
+            }
+
+            val link = TextView(this).apply {
+                text = "📎 $fileName"
+                textSize = 13f
+                setTextColor(getColor(R.color.brand_blue))
+                val top = (8 * resources.displayMetrics.density).toInt()
+                setPadding(0, top, 0, 0)
+                setOnClickListener {
+                    runCatching {
+                        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(fileUrl)))
+                    }.onFailure {
+                        Toast.makeText(this@NoticeDetailActivity, "파일을 열 수 없습니다.", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+            container.addView(link)
+        }
+    }
+
+    /** 이미지 URL을 백그라운드에서 내려받아 썸네일로 표시한다. 실패해도 아래 파일명 링크는 남는다. */
+    private fun loadThumbnail(fileUrl: String, imageView: ImageView) {
+        lifecycleScope.launch {
+            val bitmap: Bitmap? = withContext(Dispatchers.IO) {
+                runCatching {
+                    URL(fileUrl).openStream().use { BitmapFactory.decodeStream(it) }
+                }.getOrNull()
+            }
+            if (bitmap != null) {
+                imageView.setImageBitmap(bitmap)
+            } else {
+                imageView.visibility = View.GONE
             }
         }
     }
