@@ -4,7 +4,7 @@
 
 공통 백엔드([PTManagerBackend](../PTManagerBackend), Spring Boot · JWT)에 연결되어 로그인부터 근무·대타·공지·알림까지 실제 REST API로 동작합니다.
 
-> 사장(관리자)용은 [PTManagerEmployer](../PTManagerEmployer)를 참고하세요. 같은 백엔드·데이터를 공유하되 화면은 역할별로 분리되어 있으며, 알바 앱은 **파랑(#3182F6)** 테마입니다.
+> 사장(관리자)용은 [PTManagerEmployer](../PTManagerEmployer)를 참고하세요. 같은 백엔드·데이터를 공유하되 화면은 역할별로 분리되어 있으며, 알바 앱은 **Action Blue(#0066CC)**를 메인 컬러로 사용합니다.
 
 ## 화면 구성 (하단 5탭)
 

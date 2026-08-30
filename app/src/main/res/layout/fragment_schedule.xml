@@ -114,11 +114,11 @@
                 <TextView android:id="@+id/day_num_4" style="@style/DayNum" android:text="" />
             </LinearLayout>
             <LinearLayout android:id="@+id/day_cell_5" style="@style/DayCell">
-                <TextView style="@style/DayLabel" android:text="토" android:textColor="@color/weekend_blue" />
+                <TextView style="@style/DayLabel" android:text="토" android:textColor="@color/text_secondary" />
                 <TextView android:id="@+id/day_num_5" style="@style/DayNum" android:text="" />
             </LinearLayout>
             <LinearLayout android:id="@+id/day_cell_6" style="@style/DayCell">
-                <TextView style="@style/DayLabel" android:text="일" android:textColor="@color/weekend_red" />
+                <TextView style="@style/DayLabel" android:text="일" android:textColor="@color/accent_red" />
                 <TextView android:id="@+id/day_num_6" style="@style/DayNum" android:text="" />
             </LinearLayout>
         </LinearLayout>

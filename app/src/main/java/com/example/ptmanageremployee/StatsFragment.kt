@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.WeeklyCost
+import com.example.ptmanageremployee.data.weekBucketIndex
 import com.example.ptmanageremployee.data.won
 import kotlinx.coroutines.launch
 import java.time.LocalDate
@@ -37,22 +38,21 @@ class StatsFragment : Fragment() {
 
     private fun loadStats(view: View) {
         val yearMonth = selected.toString() // 예: 2026-07
-        view.findViewById<TextView>(R.id.tv_month_selector).text = "${selected.monthValue}월 ▾"
-        view.findViewById<TextView>(R.id.tv_pay_label).text = "${selected.monthValue}월 급여"
+        view.text(R.id.tv_month_selector, "${selected.monthValue}월 ▾")
+        view.text(R.id.tv_pay_label, "${selected.monthValue}월 급여")
 
         // 현재 월일 때만 이번 주를 강조한다. 지난 달은 강조 없음(-1).
-        val activeWeek = if (selected == YearMonth.now()) currentWeekIndex(LocalDate.now()) else -1
+        val activeWeek = if (selected == YearMonth.now()) weekBucketIndex(LocalDate.now()) else -1
         lifecycleScope.launch {
             val pay = runCatching { Network.api.getMyPayroll(yearMonth) }.getOrNull() ?: return@launch
             val hours = pay.workedMinutes / 60
             val mins = pay.workedMinutes % 60
             val hoursText = if (mins == 0L) "${hours}시간" else "${hours}시간 ${mins}분"
 
-            view.findViewById<TextView>(R.id.tv_pay_amount).text = won(pay.amount)
-            view.findViewById<TextView>(R.id.tv_pay_sub).text =
-                "$hoursText 근무 · 시급 ${won(pay.hourlyWage.toLong())}"
-            view.findViewById<TextView>(R.id.tv_worked_hours).text = hoursText
-            view.findViewById<TextView>(R.id.tv_hourly_wage).text = won(pay.hourlyWage.toLong())
+            view.text(R.id.tv_pay_amount, won(pay.amount))
+            view.text(R.id.tv_pay_sub, "$hoursText 근무 · 시급 ${won(pay.hourlyWage.toLong())}")
+            view.text(R.id.tv_worked_hours, hoursText)
+            view.text(R.id.tv_hourly_wage, won(pay.hourlyWage.toLong()))
             renderWeeklyChart(view, pay.weeks, activeWeek)
         }
     }
@@ -89,10 +89,6 @@ class StatsFragment : Fragment() {
             )
         }
     }
-
-    /** 백엔드와 동일한 버킷: 1–7→0, 8–14→1, 15–21→2, 22–말일→3 */
-    private fun currentWeekIndex(date: LocalDate): Int =
-        ((date.dayOfMonth - 1) / 7).coerceAtMost(3)
 
     companion object {
         private const val MIN_BAR_DP = 6f

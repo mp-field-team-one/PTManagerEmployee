@@ -6,19 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.NotificationSettingUpdate
 import com.example.ptmanageremployee.data.Push
+import com.example.ptmanageremployee.data.shiftMinutes
 import com.example.ptmanageremployee.data.TokenStore
-import com.example.ptmanageremployee.data.toUserMessage
 import com.example.ptmanageremployee.data.won
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
 
 class MyFragment : Fragment() {
     override fun onCreateView(
@@ -26,7 +24,7 @@ class MyFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_my, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<TextView>(R.id.tv_my_name).text = "${TokenStore.name ?: "사용자"}님"
+        view.text(R.id.tv_my_name, "${TokenStore.name ?: "사용자"}님")
         val subView = view.findViewById<TextView>(R.id.tv_my_sub)
         subView.text = TokenStore.email ?: "알바"
         // 소속 매장이 있으면 매장명을 함께 표시한다(GET /api/workplaces/{id}).
@@ -76,19 +74,10 @@ class MyFragment : Fragment() {
             val wage = runCatching { Network.api.getMyPayroll(yearMonth).hourlyWage }.getOrDefault(0)
             val minutes = shifts.sumOf { shiftMinutes(it.startTime, it.endTime) }
 
-            view.findViewById<TextView>(R.id.tv_sum_shifts).text = "${shifts.size}건"
-            view.findViewById<TextView>(R.id.tv_sum_checkin).text =
-                "${shifts.count { it.checkedInAt != null }}회"
-            view.findViewById<TextView>(R.id.tv_sum_pay).text = won(minutes * wage / 60)
+            view.text(R.id.tv_sum_shifts, "${shifts.size}건")
+            view.text(R.id.tv_sum_checkin, "${shifts.count { it.checkedInAt != null }}회")
+            view.text(R.id.tv_sum_pay, won(minutes * wage / 60))
         }
-    }
-
-    /** startTime/endTime("HH:mm:ss") 사이 분. 종료가 시작보다 이르면 자정 넘김으로 보고 +24h. */
-    private fun shiftMinutes(start: String?, end: String?): Long {
-        val s = runCatching { LocalTime.parse(start) }.getOrNull() ?: return 0
-        val e = runCatching { LocalTime.parse(end) }.getOrNull() ?: return 0
-        val diff = java.time.Duration.between(s, e).toMinutes()
-        return if (diff < 0) diff + 24 * 60 else diff
     }
 
     /** 알림 카테고리 on/off 를 불러와 다중 선택 다이얼로그로 수정한다. */
@@ -96,7 +85,7 @@ class MyFragment : Fragment() {
         lifecycleScope.launch {
             val s = runCatching { Network.api.getNotificationSetting() }.getOrNull()
             if (s == null) {
-                Toast.makeText(requireContext(), "알림 설정을 불러오지 못했습니다.", Toast.LENGTH_SHORT).show()
+                toast("알림 설정을 불러오지 못했습니다.")
                 return@launch
             }
             val labels = arrayOf("대타 알림", "공지 알림", "출퇴근 알림", "가입 신청 알림")
@@ -107,16 +96,11 @@ class MyFragment : Fragment() {
                 .setTitle("알림 설정")
                 .setMultiChoiceItems(labels, checked) { _, which, isChecked -> checked[which] = isChecked }
                 .setPositiveButton("저장") { _, _ ->
-                    lifecycleScope.launch {
-                        runCatching {
-                            Network.api.updateNotificationSetting(
-                                NotificationSettingUpdate(checked[0], checked[1], checked[2], checked[3]),
-                            )
-                        }.onSuccess {
-                            Toast.makeText(requireContext(), "알림 설정을 저장했어요", Toast.LENGTH_SHORT).show()
-                        }.onFailure {
-                            Toast.makeText(requireContext(), it.toUserMessage(), Toast.LENGTH_SHORT).show()
-                        }
+                    launchApi {
+                        Network.api.updateNotificationSetting(
+                            NotificationSettingUpdate(checked[0], checked[1], checked[2], checked[3]),
+                        )
+                        toast("알림 설정을 저장했어요")
                     }
                 }
                 .setNegativeButton("취소", null)

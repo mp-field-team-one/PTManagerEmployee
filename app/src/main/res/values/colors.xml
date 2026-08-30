@@ -1,43 +1,45 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Toss-style palette extracted from the wireframe -->
-    <color name="brand_blue">#3182F6</color>
-    <color name="brand_blue_light">#EEF4FF</color>
-    <color name="brand_blue_border">#D6E4FF</color>
-    <color name="brand_blue_bg">#F7FAFF</color>
-    <color name="brand_blue_chip">#DBE7FF</color>
+    <!-- Apple-inspired single-accent palette from DESIGN.md.
+         틴트 계열은 회색이 아니라 브랜드 블루를 옅게 깐 값 (사장 앱 보라 틴트와 대칭). -->
+    <color name="brand_blue">#0066CC</color>
+    <color name="brand_blue_focus">#0071E3</color>
+    <color name="brand_blue_light">#EDF4FD</color>
+    <color name="brand_blue_border">#CFE2F8</color>
+    <color name="brand_blue_bg">#F5F9FF</color>
+    <color name="brand_blue_chip">#EAF2FE</color>
+    <!-- 브랜드 색 카드 위에 올라가는 보조 텍스트 (brand_blue 대비 4.89:1). -->
+    <color name="on_brand_secondary">#E8F1FF</color>
 
-    <color name="ink">#1F1F1F</color>
-    <color name="text_primary">#222222</color>
-    <color name="text_secondary">#888888</color>
-    <color name="text_tertiary">#999999</color>
-    <color name="text_hint">#BBBBBB</color>
-    <color name="text_muted">#C0C0C0</color>
+    <color name="ink">#1D1D1F</color>
+    <color name="text_primary">#1D1D1F</color>
+    <color name="text_secondary">@color/text_secondary</color>
+    <!-- 흰 배경 대비 5.07:1 (기존 #7A7A7A 는 4.29:1 로 AA 미달). -->
+    <color name="text_tertiary">#6E6E73</color>
+    <color name="text_hint">#6E6E73</color>
 
-    <color name="border">#ECECEC</color>
-    <color name="border_light">#F0F0F0</color>
-    <color name="divider">#F1F1F1</color>
-    <color name="input_border">#E2E2E2</color>
+    <color name="border">#E0E0E0</color>
+    <color name="divider">#F0F0F0</color>
+    <color name="input_border">#E0E0E0</color>
 
-    <color name="warn_orange">#F08C00</color>
+    <!-- 경고색은 전부 텍스트/아이콘용이라 AA 통과하는 진한 앰버로 (5.02:1). -->
+    <color name="warn_orange">#B45309</color>
     <color name="warn_bg">#FFF8EE</color>
     <color name="warn_border">#FFE3B8</color>
     <color name="warn_border_dashed">#FFD591</color>
 
-    <color name="accent_green">#16A34A</color>
+    <color name="accent_green">#147A38</color>
     <color name="accent_red">#E03131</color>
-    <color name="weekend_red">#FF0066</color>
-    <color name="weekend_blue">#2F6BFF</color>
-    <color name="surface_gray">#F7F8FA</color>
+    <color name="surface_gray">#F5F5F7</color>
 
     <color name="white">#FFFFFFFF</color>
     <color name="black">#FF000000</color>
 
-    <!-- 소식 카테고리 색 (직원·사장 앱 공통) -->
-    <color name="cat_notice">#3182F6</color>
+    <!-- 소식 카테고리 색 (두 앱 공통 값). 직원 앱은 공지 = 브랜드 블루로 통합, 파랑 3종 충돌 제거. -->
+    <color name="cat_notice">#0066CC</color>
     <color name="cat_notice_bg">#EAF2FE</color>
-    <color name="cat_handover">#16A34A</color>
+    <color name="cat_handover">#147A38</color>
     <color name="cat_handover_bg">#E7F6EC</color>
-    <color name="cat_swap">#F59E0B</color>
+    <color name="cat_swap">#B45309</color>
     <color name="cat_swap_bg">#FEF3E2</color>
 </resources>

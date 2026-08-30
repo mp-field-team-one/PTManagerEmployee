@@ -26,7 +26,6 @@ object Network {
 
     val BASE_URL: String = BuildConfig.BASE_URL
 
-    /** 저장된 액세스 토큰을 Authorization 헤더로 부착한다. */
     /**
      * 리프레시 토큰마저 만료돼 세션을 복구할 수 없을 때 호출된다.
      * UI(예: MainActivity)에서 로그인 화면으로 보내도록 설정한다.
@@ -123,52 +122,37 @@ object Network {
             .build()
 
     /** 이 응답까지 이어진 응답 체인 길이(재시도 횟수 추적). */
-    private fun responseCount(response: Response): Int {
-        var count = 1
-        var prior = response.priorResponse
-        while (prior != null) {
-            count++
-            prior = prior.priorResponse
-        }
-        return count
-    }
+    private fun responseCount(response: Response): Int =
+        generateSequence(response) { it.priorResponse }.count()
+
+    private fun clientBuilder() = OkHttpClient.Builder()
+        .connectTimeout(15, TimeUnit.SECONDS)
+        .readTimeout(15, TimeUnit.SECONDS)
 
     private val client: OkHttpClient by lazy {
-        OkHttpClient.Builder()
+        clientBuilder()
             .addInterceptor(authInterceptor)
             .addInterceptor(logging)
             .authenticator(tokenAuthenticator)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
             .build()
     }
 
     /** 토큰 갱신 전용 클라이언트: authInterceptor·authenticator 를 적용하지 않는다. */
     private val refreshClient: OkHttpClient by lazy {
-        OkHttpClient.Builder()
-            .addInterceptor(logging)
-            .connectTimeout(15, TimeUnit.SECONDS)
-            .readTimeout(15, TimeUnit.SECONDS)
-            .build()
+        clientBuilder().addInterceptor(logging).build()
     }
 
-    private val refreshApi: RefreshApi by lazy {
-        Retrofit.Builder()
-            .baseUrl(BASE_URL)
-            .client(refreshClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-            .create(RefreshApi::class.java)
-    }
-
-    val api: ApiService by lazy {
+    private inline fun <reified T> retrofit(client: OkHttpClient): T =
         Retrofit.Builder()
             .baseUrl(BASE_URL)
             .client(client)
             .addConverterFactory(GsonConverterFactory.create())
             .build()
-            .create(ApiService::class.java)
-    }
+            .create(T::class.java)
+
+    private val refreshApi: RefreshApi by lazy { retrofit(refreshClient) }
+
+    val api: ApiService by lazy { retrofit(client) }
 }
 
 /** 토큰 갱신만 담당하는 최소 API(동기 호출). */

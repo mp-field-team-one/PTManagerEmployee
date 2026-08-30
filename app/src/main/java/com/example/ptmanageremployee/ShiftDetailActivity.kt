@@ -3,16 +3,11 @@ package com.example.ptmanageremployee
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
-import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Extras
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.shiftTimeRange
-import com.example.ptmanageremployee.data.toUserMessage
-import kotlinx.coroutines.launch
 
 class ShiftDetailActivity : AppCompatActivity() {
 
@@ -37,20 +32,13 @@ class ShiftDetailActivity : AppCompatActivity() {
     }
 
     private fun loadShift() {
-        lifecycleScope.launch {
-            try {
-                val shift = Network.api.getShift(shiftId)
-                findViewById<TextView>(R.id.tv_date).text = shift.workDate ?: ""
-                findViewById<TextView>(R.id.tv_time).text =
-                    shiftTimeRange(shift.startTime, shift.endTime)
-                findViewById<TextView>(R.id.tv_workplace).text = shift.workplaceName ?: "-"
-                findViewById<TextView>(R.id.tv_coworkers).text =
-                    shift.coworkers?.takeIf { it.isNotEmpty() }?.joinToString(", ") ?: "혼자 근무"
-                findViewById<TextView>(R.id.tv_pay).text =
-                    shift.estimatedPay?.let { "%,d원".format(it) } ?: "-"
-            } catch (e: Exception) {
-                Toast.makeText(this@ShiftDetailActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()
-            }
+        launchApi {
+            val shift = Network.api.getShift(shiftId)
+            text(R.id.tv_date, shift.workDate)
+            text(R.id.tv_time, shiftTimeRange(shift.startTime, shift.endTime))
+            text(R.id.tv_workplace, shift.workplaceName ?: "-")
+            text(R.id.tv_coworkers, shift.coworkers?.takeIf { it.isNotEmpty() }?.joinToString(", ") ?: "혼자 근무")
+            text(R.id.tv_pay, shift.estimatedPay?.let { "%,d원".format(it) } ?: "-")
         }
     }
 }

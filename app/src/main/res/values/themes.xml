@@ -3,12 +3,15 @@
     <style name="Base.Theme.PTManagerEmployee" parent="Theme.Material3.Light.NoActionBar">
         <item name="colorPrimary">@color/brand_blue</item>
         <item name="colorOnPrimary">@color/white</item>
-        <!-- 하단 탭 선택 알약(active indicator) 색 — 기본 M3 보라 대신 브랜드 블루 계열로 -->
+        <item name="colorPrimaryContainer">@color/brand_blue_bg</item>
+        <item name="colorOnPrimaryContainer">@color/ink</item>
         <item name="colorSecondaryContainer">@color/brand_blue_chip</item>
         <item name="colorOnSecondaryContainer">@color/brand_blue</item>
         <item name="colorSurface">@color/white</item>
         <item name="colorOnSurface">@color/text_primary</item>
         <item name="android:colorBackground">@color/white</item>
+        <item name="android:fontFamily">sans-serif</item>
+        <item name="android:colorAccent">@color/brand_blue</item>
         <item name="android:statusBarColor">@color/white</item>
         <item name="android:navigationBarColor">@color/white</item>
         <item name="android:windowLightStatusBar">true</item>
@@ -20,17 +23,21 @@
     <!-- Reusable text appearances mirroring the wireframe type ramp -->
     <style name="Text.Title" parent="">
         <item name="android:textColor">@color/text_primary</item>
-        <item name="android:textSize">16sp</item>
-        <item name="android:textStyle">bold</item>
+        <item name="android:textSize">21sp</item>
+        <item name="android:textFontWeight">600</item>
+        <item name="android:letterSpacing">-0.01</item>
     </style>
 
     <style name="Text.Body" parent="">
         <item name="android:textColor">@color/text_secondary</item>
-        <item name="android:textSize">12sp</item>
+        <item name="android:textSize">17sp</item>
+        <item name="android:lineSpacingMultiplier">1.47</item>
+        <item name="android:letterSpacing">-0.01</item>
     </style>
 
     <style name="Text.Caption" parent="">
         <item name="android:textColor">@color/text_tertiary</item>
-        <item name="android:textSize">11sp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:lineSpacingMultiplier">1.43</item>
     </style>
 </resources>

@@ -6,7 +6,6 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -85,11 +84,7 @@ class MainActivity : AppCompatActivity() {
             val user = runCatching { Network.api.me() }.getOrNull() ?: return@launch
             TokenStore.updateUser(user)
             if (user.workplaceId == null) {
-                Toast.makeText(
-                    this@MainActivity,
-                    "매장에서 내보내졌어요. 다시 매장에 참여해 주세요.",
-                    Toast.LENGTH_LONG,
-                ).show()
+                toast("매장에서 내보내졌어요. 다시 매장에 참여해 주세요.", long = true)
                 startActivity(
                     Intent(this@MainActivity, JoinStoreActivity::class.java)
                         .addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK),

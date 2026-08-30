@@ -5,16 +5,14 @@ import android.os.Bundle
 import android.view.View
 import android.widget.EditText
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
+import androidx.core.view.isVisible
 import com.example.ptmanageremployee.data.LoginRequest
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.SignupRequest
+import com.example.ptmanageremployee.data.TokenResponse
 import com.example.ptmanageremployee.data.TokenStore
-import com.example.ptmanageremployee.data.toUserMessage
-import kotlinx.coroutines.launch
 
 class LoginActivity : AppCompatActivity() {
 
@@ -35,8 +33,8 @@ class LoginActivity : AppCompatActivity() {
 
         signupBtn.setOnClickListener {
             signupMode = !signupMode
-            nameLabel.visibility = if (signupMode) View.VISIBLE else View.GONE
-            nameInput.visibility = if (signupMode) View.VISIBLE else View.GONE
+            nameLabel.isVisible = signupMode
+            nameInput.isVisible = signupMode
             primaryBtn.text = if (signupMode) "회원가입" else "로그인"
             signupBtn.text = if (signupMode) "로그인으로 돌아가기" else "이메일로 회원가입"
         }
@@ -58,9 +56,11 @@ class LoginActivity : AppCompatActivity() {
                     toast("비밀번호는 8자 이상이어야 합니다.")
                     return@setOnClickListener
                 }
-                doSignup(name, email, password, primaryBtn)
+                authenticate(primaryBtn) {
+                    Network.api.signup(SignupRequest(email, password, name, role = "EMPLOYEE"))
+                }
             } else {
-                doLogin(email, password, primaryBtn)
+                authenticate(primaryBtn) { Network.api.login(LoginRequest(email, password)) }
             }
         }
 
@@ -69,31 +69,11 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun doLogin(email: String, password: String, btn: TextView) {
-        btn.isEnabled = false
-        lifecycleScope.launch {
-            try {
-                val token = Network.api.login(LoginRequest(email, password))
-                TokenStore.saveSession(token)
-                routeAfterAuth()
-            } catch (e: Exception) {
-                toast(e.toUserMessage())
-                btn.isEnabled = true
-            }
-        }
-    }
-
-    private fun doSignup(name: String, email: String, password: String, btn: TextView) {
-        btn.isEnabled = false
-        lifecycleScope.launch {
-            try {
-                val token = Network.api.signup(SignupRequest(email, password, name, role = "EMPLOYEE"))
-                TokenStore.saveSession(token)
-                routeAfterAuth()
-            } catch (e: Exception) {
-                toast(e.toUserMessage())
-                btn.isEnabled = true
-            }
+    /** 로그인/회원가입 공통: 성공하면 세션을 저장하고 다음 화면으로 보낸다. */
+    private fun authenticate(btn: TextView, request: suspend () -> TokenResponse) {
+        launchApi(btn) {
+            TokenStore.saveSession(request())
+            routeAfterAuth()
         }
     }
 
@@ -108,5 +88,4 @@ class LoginActivity : AppCompatActivity() {
         finish()
     }
 
-    private fun toast(msg: String) = Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
 }

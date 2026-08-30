@@ -3,17 +3,13 @@ package com.example.ptmanageremployee
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
-import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Extras
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.TokenStore
 import com.example.ptmanageremployee.data.handoverCategoryLabel
-import com.example.ptmanageremployee.data.toUserMessage
-import kotlinx.coroutines.launch
+import com.example.ptmanageremployee.data.metaLine
 
 /** 인수인계 노트 상세. 목록에서 넘겨받은 값을 그대로 표시한다(별도 단건 조회 API 없음). */
 class HandoverDetailActivity : AppCompatActivity() {
@@ -35,11 +31,10 @@ class HandoverDetailActivity : AppCompatActivity() {
         val authorName = intent.getStringExtra(Extras.HANDOVER_AUTHOR_NAME)
         val createdAt = intent.getStringExtra(Extras.HANDOVER_CREATED_AT)
 
-        findViewById<TextView>(R.id.tv_category).text = handoverCategoryLabel(category)
-        findViewById<TextView>(R.id.tv_title).text = title ?: ""
-        findViewById<TextView>(R.id.tv_meta).text =
-            listOf(authorName ?: "작성자", createdAt?.take(10) ?: "").filter { it.isNotBlank() }.joinToString(" · ")
-        findViewById<TextView>(R.id.tv_content).text = content ?: ""
+        text(R.id.tv_category, handoverCategoryLabel(category))
+        text(R.id.tv_title, title)
+        text(R.id.tv_meta, metaLine(authorName, createdAt, "작성자"))
+        text(R.id.tv_content, content)
 
         // 본인이 쓴 노트만 삭제 가능(서버도 동일 규칙).
         if (handoverId > 0 && authorId == TokenStore.userId) {
@@ -51,22 +46,12 @@ class HandoverDetailActivity : AppCompatActivity() {
     }
 
     private fun confirmDelete() {
-        AlertDialog.Builder(this)
-            .setTitle("인수인계 삭제")
-            .setMessage("이 노트를 삭제할까요?")
-            .setPositiveButton("삭제") { _, _ ->
-                lifecycleScope.launch {
-                    runCatching { Network.api.deleteHandover(handoverId) }
-                        .onSuccess {
-                            Toast.makeText(this@HandoverDetailActivity, "삭제했어요", Toast.LENGTH_SHORT).show()
-                            finish()
-                        }
-                        .onFailure {
-                            Toast.makeText(this@HandoverDetailActivity, it.toUserMessage(), Toast.LENGTH_SHORT).show()
-                        }
-                }
+        confirm("인수인계 삭제", "이 노트를 삭제할까요?", "삭제") {
+            launchApi {
+                Network.api.deleteHandover(handoverId)
+                toast("삭제했어요")
+                finish()
             }
-            .setNegativeButton("취소", null)
-            .show()
+        }
     }
 }

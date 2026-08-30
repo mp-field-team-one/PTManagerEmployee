@@ -8,22 +8,21 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Extras
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.ShiftDto
 import com.example.ptmanageremployee.data.TokenStore
+import com.example.ptmanageremployee.data.mondayOf
 import com.example.ptmanageremployee.data.relativeTime
+import com.example.ptmanageremployee.data.shiftMinutes
 import com.example.ptmanageremployee.data.shiftTimeRange
-import com.example.ptmanageremployee.data.toUserMessage
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.launch
 import java.time.LocalDate
-import java.time.LocalTime
 
 class HomeFragment : Fragment() {
 
@@ -35,7 +34,7 @@ class HomeFragment : Fragment() {
     ): View = inflater.inflate(R.layout.fragment_home, container, false)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        view.findViewById<TextView>(R.id.tv_greeting).text = getString(R.string.home_greeting, TokenStore.name ?: getString(R.string.home_default_user))
+        view.text(R.id.tv_greeting, getString(R.string.home_greeting, TokenStore.name ?: getString(R.string.home_default_user)))
 
         view.findViewById<View>(R.id.btn_checkin).setOnClickListener {
             startActivity(shiftIntent(CheckInActivity::class.java))
@@ -83,28 +82,17 @@ class HomeFragment : Fragment() {
 
     /** 이번 주(월~일) 내 근무 건수와 총 근무 시간을 계산해 표시한다. */
     private suspend fun loadWeekSummary(view: View) {
-        val today = LocalDate.now()
-        val monday = today.minusDays((today.dayOfWeek.value - 1).toLong())
+        val monday = mondayOf(LocalDate.now())
         val sunday = monday.plusDays(6)
         val summaryView = view.findViewById<TextView>(R.id.tv_week_summary)
         val shifts = runCatching {
             Network.api.getShifts(employeeId = "me", from = monday.toString(), to = sunday.toString())
         }.getOrNull() ?: run { summaryView.text = "—"; return }
 
-        var minutes = 0L
-        for (s in shifts) minutes += shiftMinutes(s.startTime, s.endTime)
-        val h = minutes / 60
-        val m = minutes % 60
-        val hoursText = if (m == 0L) "${h}시간" else "${h}시간 ${m}분"
+        val minutes = shifts.sumOf { shiftMinutes(it.startTime, it.endTime) }
+        val hoursText =
+            if (minutes % 60 == 0L) "${minutes / 60}시간" else "${minutes / 60}시간 ${minutes % 60}분"
         summaryView.text = "근무 ${shifts.size}건 · $hoursText ›"
-    }
-
-    /** startTime/endTime("HH:mm:ss") 사이 분. 종료가 시작보다 이르면 자정 넘김으로 보고 +24h. */
-    private fun shiftMinutes(start: String?, end: String?): Long {
-        val s = runCatching { LocalTime.parse(start) }.getOrNull() ?: return 0
-        val e = runCatching { LocalTime.parse(end) }.getOrNull() ?: return 0
-        val diff = java.time.Duration.between(s, e).toMinutes()
-        return if (diff < 0) diff + 24 * 60 else diff
     }
 
     /** 내가 지원한 대타 중 대기 중(PENDING) 건수를 요약 줄로 노출한다. 없으면 숨김. */
@@ -128,7 +116,7 @@ class HomeFragment : Fragment() {
         val notice = runCatching {
             Network.api.getNotices(workplaceId = TokenStore.workplaceId, size = 1).content.firstOrNull()
         }.getOrNull()
-        view.findViewById<TextView>(R.id.tv_notice_time).text = relativeTime(notice?.createdAt)
+        view.text(R.id.tv_notice_time, relativeTime(notice?.createdAt))
         if (notice == null) {
             titleView.text = getString(R.string.home_no_notice)
             bodyView.text = ""
@@ -146,7 +134,7 @@ class HomeFragment : Fragment() {
             Network.api.getHandovers(workplaceId = TokenStore.workplaceId)
                 .maxByOrNull { it.createdAt ?: "" }
         }.getOrNull()
-        view.findViewById<TextView>(R.id.tv_handover_time).text = relativeTime(handover?.createdAt)
+        view.text(R.id.tv_handover_time, relativeTime(handover?.createdAt))
         if (handover == null) {
             titleView.text = getString(R.string.home_no_handover)
             contentView.text = ""
@@ -164,7 +152,7 @@ class HomeFragment : Fragment() {
             Network.api.getSwapRequests(workplaceId = TokenStore.workplaceId, view = "open")
                 .maxByOrNull { it.createdAt ?: "" }
         }.getOrNull()
-        view.findViewById<TextView>(R.id.tv_swap_req_time).text = relativeTime(req?.createdAt)
+        view.text(R.id.tv_swap_req_time, relativeTime(req?.createdAt))
         if (req == null) {
             titleView.text = getString(R.string.home_no_swap_request)
             subView.text = ""
@@ -190,25 +178,21 @@ class HomeFragment : Fragment() {
         val timeView = view.findViewById<TextView>(R.id.tv_today_time)
         val withView = view.findViewById<TextView>(R.id.tv_today_with)
         val chevronView = view.findViewById<View>(R.id.tv_today_chevron)
-        lifecycleScope.launch {
-            try {
-                val shifts = Network.api.getShifts(employeeId = "me", from = today, to = today)
-                val shift: ShiftDto? = shifts.firstOrNull()
-                if (shift == null) {
-                    labelView.text = getString(R.string.home_no_shift_label)
-                    timeView.text = getString(R.string.home_no_shift_time)
-                    withView.text = getString(R.string.home_no_shift_desc)
-                    todayShiftId = -1
-                    chevronView.visibility = View.GONE
-                } else {
-                    todayShiftId = shift.id
-                    labelView.text = getString(R.string.home_today_shift)
-                    timeView.text = shiftTimeRange(shift.startTime, shift.endTime)
-                    withView.text = shift.checkedInAt?.let { getString(R.string.home_checkin_done) } ?: getString(R.string.home_before_checkin)
-                    chevronView.visibility = View.VISIBLE
-                }
-            } catch (e: Exception) {
-                Toast.makeText(requireContext(), e.toUserMessage(), Toast.LENGTH_SHORT).show()
+        launchApi {
+            val shifts = Network.api.getShifts(employeeId = "me", from = today, to = today)
+            val shift: ShiftDto? = shifts.firstOrNull()
+            if (shift == null) {
+                labelView.text = getString(R.string.home_no_shift_label)
+                timeView.text = getString(R.string.home_no_shift_time)
+                withView.text = getString(R.string.home_no_shift_desc)
+                todayShiftId = -1
+                chevronView.visibility = View.GONE
+            } else {
+                todayShiftId = shift.id
+                labelView.text = getString(R.string.home_today_shift)
+                timeView.text = shiftTimeRange(shift.startTime, shift.endTime)
+                withView.text = shift.checkedInAt?.let { getString(R.string.home_checkin_done) } ?: getString(R.string.home_before_checkin)
+                chevronView.visibility = View.VISIBLE
             }
         }
     }

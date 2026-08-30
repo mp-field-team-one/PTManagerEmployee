@@ -28,31 +28,29 @@
             android:id="@+id/btn_notice_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="22dp"
-            android:background="@drawable/bg_home_news_card"
+            android:layout_marginTop="20dp"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="6dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:background="@drawable/bg_circle_notice"
                 android:contentDescription="공지사항"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_megaphone"
                 app:tint="@color/cat_notice" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="공지사항"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -74,14 +72,11 @@
                 android:id="@+id/tv_notice_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_home_news_card"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:paddingHorizontal="18dp"
-                android:paddingVertical="22dp"
                 android:text="등록된 공지가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -89,31 +84,29 @@
             android:id="@+id/btn_handover_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/bg_home_news_card"
+            android:layout_marginTop="24dp"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="6dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:background="@drawable/bg_circle_handover"
                 android:contentDescription="인수인계"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_person"
                 app:tint="@color/cat_handover" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="인수인계"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -135,14 +128,11 @@
                 android:id="@+id/tv_handover_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_home_news_card"
+                android:layout_marginTop="12dp"
                 android:gravity="center"
-                android:paddingHorizontal="18dp"
-                android:paddingVertical="22dp"
                 android:text="등록된 인수인계가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:visibility="gone" />
         </LinearLayout>
 
@@ -150,31 +140,29 @@
             android:id="@+id/btn_swap_header"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="18dp"
-            android:background="@drawable/bg_home_news_card"
+            android:layout_marginTop="24dp"
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:paddingHorizontal="16dp"
-            android:paddingVertical="14dp">
+            android:paddingVertical="6dp">
 
             <ImageView
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
                 android:background="@drawable/bg_circle_swap"
                 android:contentDescription="대타요청"
-                android:padding="8dp"
+                android:padding="6dp"
                 android:src="@drawable/ic_swap"
                 app:tint="@color/cat_swap" />
 
             <TextView
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
+                android:layout_marginStart="8dp"
                 android:layout_weight="1"
                 android:text="대타요청"
                 android:textColor="@color/text_primary"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold" />
 
             <ImageView
@@ -190,20 +178,18 @@
             android:id="@+id/panel_swap"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="vertical">
 
             <TextView
                 android:id="@+id/tv_swap_empty"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:background="@drawable/bg_home_news_card"
+                android:layout_marginTop="16dp"
                 android:gravity="center"
-                android:paddingHorizontal="18dp"
-                android:paddingVertical="22dp"
                 android:text="지원 가능한 대타가 없습니다."
                 android:textColor="@color/text_tertiary"
-                android:textSize="13sp"
+                android:textSize="12sp"
                 android:visibility="gone" />
         </LinearLayout>
     </LinearLayout>

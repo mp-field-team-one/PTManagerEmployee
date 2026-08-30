@@ -11,14 +11,12 @@ import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import com.example.ptmanageremployee.data.Extras
 import com.example.ptmanageremployee.data.NoticeAttachmentDto
 import com.example.ptmanageremployee.data.Network
-import com.example.ptmanageremployee.data.toUserMessage
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -37,18 +35,16 @@ class NoticeDetailActivity : AppCompatActivity() {
     }
 
     private fun loadNotice(noticeId: Long) {
-        lifecycleScope.launch {
-            try {
-                val notice = Network.api.getNotice(noticeId)
-                findViewById<TextView>(R.id.tv_title).text = notice.title ?: ""
-                findViewById<TextView>(R.id.tv_meta).text =
-                    listOfNotNull(notice.authorName, notice.createdAt?.replace("T", " ")?.take(16))
-                        .joinToString(" · ")
-                findViewById<TextView>(R.id.tv_body).text = notice.body ?: ""
-                renderAttachments(notice.attachments.orEmpty())
-            } catch (e: Exception) {
-                Toast.makeText(this@NoticeDetailActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()
-            }
+        launchApi {
+            val notice = Network.api.getNotice(noticeId)
+            text(R.id.tv_title, notice.title)
+            text(
+                R.id.tv_meta,
+                listOfNotNull(notice.authorName, notice.createdAt?.replace("T", " ")?.take(16))
+                    .joinToString(" · "),
+            )
+            text(R.id.tv_body, notice.body)
+            renderAttachments(notice.attachments.orEmpty())
         }
     }
 
@@ -92,7 +88,7 @@ class NoticeDetailActivity : AppCompatActivity() {
     private fun downloadFile(fileUrl: String, fileName: String) {
         val uri = runCatching { Uri.parse(fileUrl) }.getOrNull()
         if (uri == null || uri.scheme !in setOf("http", "https")) {
-            Toast.makeText(this, "다운로드할 수 없는 파일입니다.", Toast.LENGTH_SHORT).show()
+            toast("다운로드할 수 없는 파일입니다.")
             return
         }
         try {
@@ -103,9 +99,9 @@ class NoticeDetailActivity : AppCompatActivity() {
                 setDestinationInExternalPublicDir(Environment.DIRECTORY_DOWNLOADS, fileName)
             }
             (getSystemService(Context.DOWNLOAD_SERVICE) as DownloadManager).enqueue(request)
-            Toast.makeText(this, "다운로드를 시작합니다.", Toast.LENGTH_SHORT).show()
+            toast("다운로드를 시작합니다.")
         } catch (e: Exception) {
-            Toast.makeText(this, "다운로드에 실패했습니다.", Toast.LENGTH_SHORT).show()
+            toast("다운로드에 실패했습니다.")
         }
     }
 

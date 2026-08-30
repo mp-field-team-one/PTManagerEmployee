@@ -51,7 +51,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="요청할 근무"
-                android:textColor="@color/brand_blue_border"
+                android:textColor="@color/on_brand_secondary"
                 android:textSize="13sp"
                 android:textStyle="bold" />
 
@@ -61,7 +61,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="12dp"
                 android:text=""
-                android:textColor="@color/brand_blue_border"
+                android:textColor="@color/on_brand_secondary"
                 android:textSize="14sp"
                 android:textStyle="bold" />
 
@@ -80,7 +80,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:text="사장님 승인 후 확정돼요."
-                android:textColor="@color/brand_blue_border"
+                android:textColor="@color/on_brand_secondary"
                 android:textSize="14sp" />
         </LinearLayout>
 

@@ -3,7 +3,6 @@ package com.example.ptmanageremployee
 import android.os.Bundle
 import android.view.View
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -11,7 +10,6 @@ import com.example.ptmanageremployee.data.CheckInRequest
 import com.example.ptmanageremployee.data.Extras
 import com.example.ptmanageremployee.data.Network
 import com.example.ptmanageremployee.data.shiftTimeRange
-import com.example.ptmanageremployee.data.toUserMessage
 import com.journeyapps.barcodescanner.ScanContract
 import com.journeyapps.barcodescanner.ScanOptions
 import kotlinx.coroutines.launch
@@ -30,7 +28,7 @@ class CheckInActivity : AppCompatActivity() {
     private val scanLauncher = registerForActivityResult(ScanContract()) { result ->
         val token = result.contents
         if (token.isNullOrBlank()) {
-            Toast.makeText(this, "QR 스캔이 취소되었습니다.", Toast.LENGTH_SHORT).show()
+            toast("QR 스캔이 취소되었습니다.")
         } else {
             submit(token)
         }
@@ -50,7 +48,7 @@ class CheckInActivity : AppCompatActivity() {
 
         findViewById<View>(R.id.btn_checkin_confirm).setOnClickListener {
             if (shiftId <= 0) {
-                Toast.makeText(this, "오늘 예정된 근무가 없습니다.", Toast.LENGTH_SHORT).show()
+                toast("오늘 예정된 근무가 없습니다.")
                 return@setOnClickListener
             }
             if (mode == Mode.DONE) return@setOnClickListener
@@ -65,19 +63,15 @@ class CheckInActivity : AppCompatActivity() {
     }
 
     private fun submit(qrToken: String) {
-        lifecycleScope.launch {
-            try {
-                if (mode == Mode.CHECK_IN) {
-                    Network.api.checkIn(shiftId, CheckInRequest(qrToken = qrToken))
-                    Toast.makeText(this@CheckInActivity, "출근 처리되었습니다", Toast.LENGTH_SHORT).show()
-                } else {
-                    Network.api.checkOut(shiftId, CheckInRequest(qrToken = qrToken))
-                    Toast.makeText(this@CheckInActivity, "퇴근 처리되었습니다", Toast.LENGTH_SHORT).show()
-                }
-                loadShift() // 상태 갱신 → 버튼 모드 전환(출근 후엔 퇴근 버튼으로)
-            } catch (e: Exception) {
-                Toast.makeText(this@CheckInActivity, e.toUserMessage(), Toast.LENGTH_SHORT).show()
+        launchApi {
+            if (mode == Mode.CHECK_IN) {
+                Network.api.checkIn(shiftId, CheckInRequest(qrToken = qrToken))
+                toast("출근 처리되었습니다")
+            } else {
+                Network.api.checkOut(shiftId, CheckInRequest(qrToken = qrToken))
+                toast("퇴근 처리되었습니다")
             }
+            loadShift() // 상태 갱신 → 버튼 모드 전환(출근 후엔 퇴근 버튼으로)
         }
     }
 
@@ -86,9 +80,8 @@ class CheckInActivity : AppCompatActivity() {
         lifecycleScope.launch {
             try {
                 val shift = Network.api.getShift(shiftId)
-                findViewById<TextView>(R.id.tv_checkin_shift).text =
-                    "${shift.workDate ?: ""} · ${shiftTimeRange(shift.startTime, shift.endTime)} 근무"
-                findViewById<TextView>(R.id.tv_checkin_workplace).text = shift.workplaceName ?: ""
+                text(R.id.tv_checkin_shift, "${shift.workDate ?: ""} · ${shiftTimeRange(shift.startTime, shift.endTime)} 근무")
+                text(R.id.tv_checkin_workplace, shift.workplaceName)
                 mode = when {
                     shift.checkedOutAt != null -> Mode.DONE
                     shift.checkedInAt != null -> Mode.CHECK_OUT

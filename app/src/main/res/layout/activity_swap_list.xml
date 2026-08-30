@@ -45,39 +45,39 @@
             android:id="@+id/chip_open"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/bg_pill_active"
+            android:background="@drawable/bg_chip_selected"
             android:text="지원 가능"
-            android:textColor="@color/white"
-            android:textSize="11sp"
+            android:textColor="@color/brand_blue"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:paddingHorizontal="14dp"
-            android:paddingVertical="6dp" />
+            android:paddingVertical="7dp" />
 
         <TextView
             android:id="@+id/chip_mine"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:background="@drawable/bg_pill"
+            android:background="@drawable/bg_chip_outline"
             android:text="내 요청"
             android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:paddingHorizontal="14dp"
-            android:paddingVertical="6dp" />
+            android:paddingVertical="7dp" />
 
         <TextView
             android:id="@+id/chip_applied"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="6dp"
-            android:background="@drawable/bg_pill"
+            android:background="@drawable/bg_chip_outline"
             android:text="내 지원"
             android:textColor="@color/text_tertiary"
-            android:textSize="11sp"
+            android:textSize="12sp"
             android:textStyle="bold"
             android:paddingHorizontal="14dp"
-            android:paddingVertical="6dp" />
+            android:paddingVertical="7dp" />
     </LinearLayout>
 
     <ScrollView
