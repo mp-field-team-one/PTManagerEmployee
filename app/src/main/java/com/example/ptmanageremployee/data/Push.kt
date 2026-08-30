@@ -3,7 +3,6 @@ package com.example.ptmanageremployee.data
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
-import android.os.Build
 import android.util.Log
 import com.google.firebase.messaging.FirebaseMessaging
 import kotlinx.coroutines.CoroutineScope
@@ -20,21 +19,19 @@ object Push {
     const val CHANNEL_ID = "ptm_default"
     private val scope = CoroutineScope(Dispatchers.IO)
 
-    /** 알림 채널 생성(Android 8+). 앱 시작 시 1회 호출한다. */
+    // ponytail: google-services.json 없이 빌드하면 기본 FirebaseApp이 없다 → 푸시만 조용히 비활성.
+    private val fcm: FirebaseMessaging? get() = runCatching { FirebaseMessaging.getInstance() }.getOrNull()
+
+    /** 알림 채널 생성. minSdk 29라 항상 필요하고, 같은 ID로 다시 만들면 no-op이다. */
     fun ensureChannel(context: Context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val mgr = context.getSystemService(NotificationManager::class.java) ?: return
-            if (mgr.getNotificationChannel(CHANNEL_ID) == null) {
-                mgr.createNotificationChannel(
-                    NotificationChannel(CHANNEL_ID, "PTManager 알림", NotificationManager.IMPORTANCE_HIGH)
-                )
-            }
-        }
+        context.getSystemService(NotificationManager::class.java)?.createNotificationChannel(
+            NotificationChannel(CHANNEL_ID, "PTManager 알림", NotificationManager.IMPORTANCE_HIGH),
+        )
     }
 
     /** 현재 FCM 토큰을 로그로 남기고 백엔드에 등록한다(로그인 상태에서만 등록됨). */
     fun registerCurrentToken() {
-        FirebaseMessaging.getInstance().token.addOnSuccessListener { token ->
+        fcm?.token?.addOnSuccessListener { token ->
             Log.d("PtmPush", "FCM token: $token")
             registerToken(token)
         }
@@ -52,13 +49,14 @@ object Push {
 
     /** 현재 토큰을 suspend 로 가져온다(실패 시 null). */
     suspend fun currentToken(): String? = suspendCancellableCoroutine { cont ->
-        FirebaseMessaging.getInstance().token
-            .addOnSuccessListener { cont.resume(it) }
-            .addOnFailureListener { cont.resume(null) }
+        fcm?.token
+            ?.addOnSuccessListener { cont.resume(it) }
+            ?.addOnFailureListener { cont.resume(null) }
+            ?: cont.resume(null)
     }
 
     /** 로그아웃 시 이 기기의 FCM 토큰을 무효화한다. */
     fun invalidateLocalToken() {
-        FirebaseMessaging.getInstance().deleteToken()
+        fcm?.deleteToken()
     }
 }

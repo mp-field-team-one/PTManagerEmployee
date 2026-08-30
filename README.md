@@ -11,14 +11,14 @@
 | 탭 | 설명 |
 |---|---|
 | **홈** | 오늘 근무 카드·출근하기, 이번 주 근무 요약, 소식(공지·인수인계·대타요청) |
-| **스케줄** | 주간 캘린더, 내 근무 시간, 근무 가능 시간 등록 |
-| **소통** | 공지(백엔드 연동) / 메신저(정적 UI, 백엔드 미연동) |
+| **스케줄** | 주간 캘린더, 날짜별 내 근무 시간 확인 |
+| **소통** | 공지 · 인수인계 · 대타요청 미리보기와 전체 목록 |
 | **통계** | 내 급여 — 이번 달 급여(실근태 기준), 근무 시간·시급 |
 | **내 정보** | 프로필 수정, 매장 멤버, 알림 설정, 로그아웃 |
 
 ### 주요 화면 (탭 외)
 - **로그인 / 회원가입** — 이메일·비밀번호 기반(JWT). 매장 미소속 시 초대 코드로 가입 신청 → 사장 승인 후 진입
-- **출근 체크인** — 근무에 대한 출근 기록(`POST /shifts/{id}/check-in`). QR 스캐너는 미연동 단계로 더미 토큰을 전송하며, 서버가 시점 기준으로 PRESENT/LATE 판정
+- **출근 체크인** — 매장 QR을 스캔해 `POST /shifts/{id}/check-in` 또는 `check-out`을 호출하며, 서버가 서명·매장·만료 시각을 검증
 - **시프트 상세** — 근무 날짜·시간, 대타요청 진입
 - **대타요청** — 사유 입력 후 요청(`POST /swap-requests`) → 사장 승인으로 연결
 
@@ -26,9 +26,9 @@
 - Kotlin, View 기반 XML 레이아웃 (Compose 미사용)
 - 하단 탭 네비게이션 (`BottomNavigationView` + Fragment 전환)
 - 네트워킹: Retrofit2 + OkHttp(로깅·인증 인터셉터) + Gson, Kotlin Coroutines
-- 인증: JWT 액세스/리프레시 토큰을 `SharedPreferences`(`TokenStore`)에 저장, 요청 시 `Authorization: Bearer` 자동 부착
+- 인증: JWT 액세스/리프레시 토큰을 Keystore 기반 암호화 저장소에 보관, 요청 시 `Authorization: Bearer` 자동 부착
 - `applicationId` : `com.example.ptmanageremployee`
-- minSdk 35 / targetSdk 36, 라이트 전용 테마
+- minSdk 29 / targetSdk 36, 라이트 전용 테마
 
 ## 백엔드 연동
 - 데이터 계층: `com.example.ptmanageremployee.data` (`Network`·`ApiService`·`TokenStore`·`Dtos`)
@@ -37,7 +37,9 @@
   # local.properties
   base.url=http://10.0.2.2:8080/   # 에뮬레이터 → 호스트 PC의 localhost
   ```
-  실제 기기/운영에서는 이 값을 서버 주소로 바꾸면 됩니다(소스 수정 불필요). 평문 HTTP 허용을 위해 `usesCleartextTraffic=true` 설정
+  실제 기기/운영에서는 HTTPS 서버 주소로 바꿉니다. HTTP는 디버그 빌드에서만 허용되며 릴리스는 HTTPS가 아니면 시작되지 않습니다.
+
+- FCM을 사용하려면 `app/google-services.json`을 로컬에 두며 저장소에는 커밋하지 않습니다.
 
 ## 빌드 & 실행
 ```bash

@@ -14,6 +14,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.Body
 import retrofit2.http.POST
+import java.net.URI
 import java.util.concurrent.TimeUnit
 
 /**
@@ -25,6 +26,10 @@ import java.util.concurrent.TimeUnit
 object Network {
 
     val BASE_URL: String = BuildConfig.BASE_URL
+
+    init {
+        requireSecureBaseUrl(BASE_URL, BuildConfig.DEBUG)
+    }
 
     /**
      * 리프레시 토큰마저 만료돼 세션을 복구할 수 없을 때 호출된다.
@@ -48,7 +53,7 @@ object Network {
     }
 
     private val logging = HttpLoggingInterceptor().apply {
-        level = HttpLoggingInterceptor.Level.BODY
+        level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
     }
 
     /**
@@ -92,9 +97,9 @@ object Network {
                         return retryWith(response.request, body.accessToken)
                     }
                     // 리프레시 토큰이 '확실히' 무효(본문 있는 400/401)일 때만 로그아웃 확정.
-                    if (renewed != null && (renewed.code() == 401 || renewed.code() == 400)) {
+                    if (renewed != null) {
                         val err = runCatching { renewed.errorBody()?.string() }.getOrNull()
-                        if (!err.isNullOrBlank()) {
+                        if (isDefinitiveRefreshFailure(renewed.code(), err)) {
                             definitiveInvalid = true
                             break
                         }
@@ -154,6 +159,15 @@ object Network {
 
     val api: ApiService by lazy { retrofit(client) }
 }
+
+internal fun requireSecureBaseUrl(baseUrl: String, isDebug: Boolean) {
+    require(isDebug || URI(baseUrl).scheme.equals("https", ignoreCase = true)) {
+        "릴리스 빌드는 HTTPS 백엔드만 사용할 수 있습니다. local.properties의 base.url을 확인하세요."
+    }
+}
+
+internal fun isDefinitiveRefreshFailure(statusCode: Int, errorBody: String?): Boolean =
+    (statusCode == 400 || statusCode == 401) && !errorBody.isNullOrBlank()
 
 /** 토큰 갱신만 담당하는 최소 API(동기 호출). */
 private interface RefreshApi {

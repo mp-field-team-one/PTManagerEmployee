@@ -3,13 +3,16 @@ package com.example.ptmanageremployee.data
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.core.content.edit
+import androidx.security.crypto.EncryptedSharedPreferences
+import androidx.security.crypto.MasterKey
 
 /**
  * JWT 토큰과 로그인한 사용자 기본 정보를 SharedPreferences 에 보관한다.
  * 앱 어디서나 [TokenStore.init] 로 초기화된 싱글턴으로 접근한다.
  */
 object TokenStore {
-    private const val PREFS = "ptmanager_auth"
+    private const val PREFS = "ptmanager_auth_secure"
+    private const val LEGACY_PREFS = "ptmanager_auth"
     private const val KEY_ACCESS = "access_token"
     private const val KEY_REFRESH = "refresh_token"
     private const val KEY_USER_ID = "user_id"
@@ -21,7 +24,18 @@ object TokenStore {
     private lateinit var prefs: SharedPreferences
 
     fun init(context: Context) {
-        prefs = context.applicationContext.getSharedPreferences(PREFS, Context.MODE_PRIVATE)
+        val appContext = context.applicationContext
+        val masterKey = MasterKey.Builder(appContext)
+            .setKeyScheme(MasterKey.KeyScheme.AES256_GCM)
+            .build()
+        prefs = EncryptedSharedPreferences.create(
+            appContext,
+            PREFS,
+            masterKey,
+            EncryptedSharedPreferences.PrefKeyEncryptionScheme.AES256_SIV,
+            EncryptedSharedPreferences.PrefValueEncryptionScheme.AES256_GCM,
+        )
+        migrateLegacySession(appContext)
     }
 
     var accessToken: String?
@@ -74,5 +88,21 @@ object TokenStore {
 
     fun clear() {
         prefs.edit { clear() }
+    }
+
+    /** 평문 저장소에 남아 있던 세션을 암호화 저장소로 한 번만 옮긴다. */
+    private fun migrateLegacySession(context: Context) {
+        val legacy = context.getSharedPreferences(LEGACY_PREFS, Context.MODE_PRIVATE)
+        if (legacy.all.isEmpty()) return
+        prefs.edit {
+            legacy.all.forEach { (key, value) ->
+                when (value) {
+                    is String -> putString(key, value)
+                    is Long -> putLong(key, value)
+                    else -> Unit // 저장하는 값은 String/Long 뿐이다.
+                }
+            }
+        }
+        legacy.edit { clear() }
     }
 }

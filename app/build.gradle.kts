@@ -2,14 +2,18 @@ import java.util.Properties
 
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.google.services)
+    alias(libs.plugins.google.services) apply false
+}
+
+if (file("google-services.json").exists()) {
+    apply(plugin = "com.google.gms.google-services")
 }
 
 // local.properties(버전관리 제외)에서 백엔드 주소를 읽는다. 없으면 기본값 사용.
 val baseUrl: String = Properties().apply {
     rootProject.file("local.properties").takeIf { it.exists() }
         ?.inputStream()?.use { load(it) }
-}.getProperty("base.url") ?: "http://3.36.215.180:8080/"
+}.getProperty("base.url") ?: "http://10.0.2.2:8080/"
 
 android {
     namespace = "com.example.ptmanageremployee"
@@ -21,7 +25,7 @@ android {
 
     defaultConfig {
         applicationId = "com.example.ptmanageremployee"
-        minSdk = 35
+        minSdk = 29
         targetSdk = 36
         versionCode = 1
         versionName = "1.0"
@@ -64,6 +68,7 @@ dependencies {
     implementation(libs.zxing.android.embedded)
     implementation(platform(libs.firebase.bom))
     implementation(libs.firebase.messaging)
+    implementation(libs.androidx.security.crypto)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(libs.androidx.junit)

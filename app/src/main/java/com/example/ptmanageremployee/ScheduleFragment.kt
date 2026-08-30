@@ -48,9 +48,6 @@ class ScheduleFragment : Fragment() {
             }
         }
         // 대타요청은 근무 정보(ShiftDetailActivity)의 '대타요청하기', 대타 목록은 소통 탭에서 진행한다.
-        view.findViewById<View>(R.id.btn_availability).setOnClickListener {
-            toast("근무 가능 시간 등록은 준비 중이에요")
-        }
         view.findViewById<View>(R.id.btn_prev_week).setOnClickListener { shiftWeek(view, -7) }
         view.findViewById<View>(R.id.btn_next_week).setOnClickListener { shiftWeek(view, 7) }
         view.findViewById<View>(R.id.btn_this_week).setOnClickListener {
