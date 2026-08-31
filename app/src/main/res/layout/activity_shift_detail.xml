@@ -160,7 +160,7 @@
             android:foreground="?attr/selectableItemBackground"
             android:gravity="center"
             android:text="대타요청하기"
-            android:textColor="@color/brand_blue"
+            android:textColor="@color/brand"
             android:textSize="15sp"
             android:textStyle="bold" />
     </LinearLayout>

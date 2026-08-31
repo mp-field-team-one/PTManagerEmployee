@@ -114,7 +114,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/bg_home_checkin"
                 android:text="@string/home_checkin_action"
-                android:textColor="@color/brand_blue"
+                android:textColor="@color/brand"
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:gravity="center"

@@ -75,7 +75,7 @@ class NoticeDetailActivity : AppCompatActivity() {
             val link = TextView(this).apply {
                 text = "📎 $fileName"
                 textSize = 13f
-                setTextColor(getColor(R.color.brand_blue))
+                setTextColor(getColor(R.color.brand))
                 val top = (8 * resources.displayMetrics.density).toInt()
                 setPadding(0, top, 0, 0)
                 setOnClickListener { downloadFile(fileUrl, fileName) }

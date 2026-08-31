@@ -65,7 +65,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text=""
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="11sp" />
             </LinearLayout>
 
@@ -77,7 +77,7 @@
                 android:text=""
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/text_hint"
+                android:textColor="@color/text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -86,7 +86,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="›"
-            android:textColor="@color/text_hint"
+            android:textColor="@color/text_tertiary"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -145,7 +145,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text=""
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="11sp" />
             </LinearLayout>
 
@@ -157,7 +157,7 @@
                 android:text=""
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/text_hint"
+                android:textColor="@color/text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -166,7 +166,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="›"
-            android:textColor="@color/text_hint"
+            android:textColor="@color/text_tertiary"
             android:textSize="18sp" />
     </LinearLayout>
 
@@ -225,7 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginStart="8dp"
                     android:text=""
-                    android:textColor="@color/text_hint"
+                    android:textColor="@color/text_tertiary"
                     android:textSize="11sp" />
             </LinearLayout>
 
@@ -237,7 +237,7 @@
                 android:text=""
                 android:maxLines="1"
                 android:ellipsize="end"
-                android:textColor="@color/text_hint"
+                android:textColor="@color/text_tertiary"
                 android:textSize="11sp" />
         </LinearLayout>
 
@@ -246,7 +246,7 @@
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
             android:text="›"
-            android:textColor="@color/text_hint"
+            android:textColor="@color/text_tertiary"
             android:textSize="18sp" />
     </LinearLayout>
 </LinearLayout>

@@ -85,7 +85,7 @@ class StatsFragment : Fragment() {
             val active = i == activeWeek
             bar.setBackgroundResource(if (active) R.drawable.bg_bar_active else R.drawable.bg_bar)
             view.findViewById<TextView>(weekLabelIds[i]).setTextColor(
-                ContextCompat.getColor(requireContext(), if (active) R.color.brand_blue else R.color.text_hint),
+                ContextCompat.getColor(requireContext(), if (active) R.color.brand else R.color.text_tertiary),
             )
         }
     }

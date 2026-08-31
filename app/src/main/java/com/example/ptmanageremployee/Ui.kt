@@ -109,5 +109,5 @@ fun ViewGroup.addItem(@LayoutRes item: Int, bind: (View) -> Unit) {
 /** 칩 하나의 선택 상태를 반영한다. (선택 = 브랜드색, 해제 = [offColor]) */
 fun TextView.setChipSelected(selected: Boolean, @ColorRes offColor: Int = R.color.text_secondary) {
     setBackgroundResource(if (selected) R.drawable.bg_chip_selected else R.drawable.bg_chip_outline)
-    setTextColor(ContextCompat.getColor(context, if (selected) R.color.brand_blue else offColor))
+    setTextColor(ContextCompat.getColor(context, if (selected) R.color.brand else offColor))
 }

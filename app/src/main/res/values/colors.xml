@@ -1,26 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <!-- Apple-inspired single-accent palette from DESIGN.md.
-         틴트 계열은 회색이 아니라 브랜드 블루를 옅게 깐 값 (사장 앱 보라 틴트와 대칭). -->
-    <color name="brand_blue">#0066CC</color>
-    <color name="brand_blue_focus">#0071E3</color>
-    <color name="brand_blue_light">#EDF4FD</color>
-    <color name="brand_blue_border">#CFE2F8</color>
-    <color name="brand_blue_bg">#F5F9FF</color>
-    <color name="brand_blue_chip">#EAF2FE</color>
-    <!-- 브랜드 색 카드 위에 올라가는 보조 텍스트 (brand_blue 대비 4.89:1). -->
+         틴트 계열은 회색이 아니라 브랜드 블루를 옅게 깐 값 (사장 앱 보라 틴트와 대칭).
+         토큰 이름은 두 앱이 동일하고 값만 다르다 — 레이아웃/스타일을 그대로 옮길 수 있게. -->
+    <color name="brand">#0066CC</color>
+    <color name="brand_bg">#F5F9FF</color>
+    <color name="brand_light">#EDF4FD</color>
+    <color name="brand_chip">#EAF2FE</color>
+    <color name="brand_border">#CFE2F8</color>
+    <!-- 브랜드 색 카드 위에 올라가는 보조 텍스트 (brand 대비 4.89:1). -->
     <color name="on_brand_secondary">#E8F1FF</color>
 
-    <color name="ink">#1D1D1F</color>
+    <!-- 텍스트 램프: 16.83 / 9.12 / 5.07 (모두 흰 배경 기준, AA 통과). -->
     <color name="text_primary">#1D1D1F</color>
-    <color name="text_secondary">@color/text_secondary</color>
-    <!-- 흰 배경 대비 5.07:1 (기존 #7A7A7A 는 4.29:1 로 AA 미달). -->
+    <color name="text_secondary">#48484A</color>
     <color name="text_tertiary">#6E6E73</color>
-    <color name="text_hint">#6E6E73</color>
 
     <color name="border">#E0E0E0</color>
     <color name="divider">#F0F0F0</color>
-    <color name="input_border">#E0E0E0</color>
 
     <!-- 경고색은 전부 텍스트/아이콘용이라 AA 통과하는 진한 앰버로 (5.02:1). -->
     <color name="warn_orange">#B45309</color>
@@ -29,7 +26,8 @@
     <color name="warn_border_dashed">#FFD591</color>
 
     <color name="accent_green">#147A38</color>
-    <color name="accent_red">#E03131</color>
+    <!-- 5.04:1. 기존 #E03131 은 4.51:1 로 AA 경계에 걸쳐 있었다. -->
+    <color name="accent_red">#D42A2A</color>
     <color name="surface_gray">#F5F5F7</color>
 
     <color name="white">#FFFFFFFF</color>

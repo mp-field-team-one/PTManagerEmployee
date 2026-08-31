@@ -1,54 +1,37 @@
 # 알바 관리 · 알바 앱 (PTManagerEmployee)
 
-알바(직원)용 근무 관리 안드로이드 앱. 내 근무를 확인하고, 출근하고, 대타·소통을 빠르게 처리하는 데 초점을 둔 단순한 구성입니다.
+알바(직원)용 근무 관리 안드로이드 앱. 내 근무를 확인하고, 출근하고, 대타·소통을 처리한다.
+공통 백엔드([Backend](https://github.com/PTManager/Backend), Spring Boot · JWT)에 붙어 실제 REST API로 동작한다. 사장용은 [EmployerApp](https://github.com/PTManager/EmployerApp).
 
-공통 백엔드([PTManagerBackend](../PTManagerBackend), Spring Boot · JWT)에 연결되어 로그인부터 근무·대타·공지·알림까지 실제 REST API로 동작합니다.
+요구사항은 [SPEC.md](https://github.com/PTManager/docs/blob/main/SPEC.md), 구현 계획은 [PLAN.md](https://github.com/PTManager/docs/blob/main/PLAN.md), 작업 현황은 [TASKS.md](https://github.com/PTManager/docs/blob/main/TASKS.md).
 
-> 사장(관리자)용은 [PTManagerEmployer](../PTManagerEmployer)를 참고하세요. 같은 백엔드·데이터를 공유하되 화면은 역할별로 분리되어 있으며, 알바 앱은 **Action Blue(#0066CC)**를 메인 컬러로 사용합니다.
+## 화면
 
-## 화면 구성 (하단 5탭)
+하단 5탭 — **홈**(오늘 근무·출근하기·소식) · **스케줄**(주간 캘린더) · **소통**(공지·인수인계·대타요청) · **통계**(이번 달 내 급여, 실근태 기준) · **내 정보**(프로필·멤버·알림 설정).
 
-| 탭 | 설명 |
-|---|---|
-| **홈** | 오늘 근무 카드·출근하기, 이번 주 근무 요약, 소식(공지·인수인계·대타요청) |
-| **스케줄** | 주간 캘린더, 날짜별 내 근무 시간 확인 |
-| **소통** | 공지 · 인수인계 · 대타요청 미리보기와 전체 목록 |
-| **통계** | 내 급여 — 이번 달 급여(실근태 기준), 근무 시간·시급 |
-| **내 정보** | 프로필 수정, 매장 멤버, 알림 설정, 로그아웃 |
-
-### 주요 화면 (탭 외)
-- **로그인 / 회원가입** — 이메일·비밀번호 기반(JWT). 매장 미소속 시 초대 코드로 가입 신청 → 사장 승인 후 진입
-- **출근 체크인** — 매장 QR을 스캔해 `POST /shifts/{id}/check-in` 또는 `check-out`을 호출하며, 서버가 서명·매장·만료 시각을 검증
-- **시프트 상세** — 근무 날짜·시간, 대타요청 진입
-- **대타요청** — 사유 입력 후 요청(`POST /swap-requests`) → 사장 승인으로 연결
+탭 외: 로그인/회원가입(미소속이면 초대 코드로 가입 신청 → 사장 승인), **출근 체크인**(매장 QR 스캔 → `check-in`/`check-out`), 시프트 상세, 대타 요청·지원.
 
 ## 기술 스택
-- Kotlin, View 기반 XML 레이아웃 (Compose 미사용)
-- 하단 탭 네비게이션 (`BottomNavigationView` + Fragment 전환)
-- 네트워킹: Retrofit2 + OkHttp(로깅·인증 인터셉터) + Gson, Kotlin Coroutines
-- 인증: JWT 액세스/리프레시 토큰을 Keystore 기반 암호화 저장소에 보관, 요청 시 `Authorization: Bearer` 자동 부착
-- `applicationId` : `com.example.ptmanageremployee`
-- minSdk 29 / targetSdk 36, 라이트 전용 테마
 
-## 백엔드 연동
-- 데이터 계층: `com.example.ptmanageremployee.data` (`Network`·`ApiService`·`TokenStore`·`Dtos`)
-- Base URL은 `local.properties`(버전관리 제외)의 `base.url` 값을 빌드 시 `BuildConfig.BASE_URL`로 주입합니다. 키가 없으면 기본값으로 폴백합니다.
-  ```properties
-  # local.properties
-  base.url=http://10.0.2.2:8080/   # 에뮬레이터 → 호스트 PC의 localhost
-  ```
-  실제 기기/운영에서는 HTTPS 서버 주소로 바꿉니다. HTTP는 디버그 빌드에서만 허용되며 릴리스는 HTTPS가 아니면 시작되지 않습니다.
+Kotlin · View 기반 XML 레이아웃(Compose 미사용) · `BottomNavigationView` + Fragment · Retrofit2 + OkHttp(로깅·인증 인터셉터) + Gson · Coroutines.
+JWT 토큰은 Keystore 기반 암호화 저장소에 보관하고 요청 시 `Authorization: Bearer`를 자동 부착한다.
+`applicationId` `com.example.ptmanageremployee` · minSdk 29 / targetSdk 36 · 라이트 전용 테마 · 메인 컬러 **Action Blue(#0066CC)**.
 
-- FCM을 사용하려면 `app/google-services.json`을 로컬에 두며 저장소에는 커밋하지 않습니다.
+데이터 계층은 `com.example.ptmanageremployee.data`(`Network`·`ApiService`·`TokenStore`·`Dtos`).
 
 ## 빌드 & 실행
-```bash
-# 1) 백엔드 먼저 기동 (별도 터미널)
-cd ../PTManagerBackend && ./gradlew bootRun   # H2 인메모리, 시드 데이터 자동 생성
 
-# 2) 앱 빌드/설치
-./gradlew assembleDebug      # app/build/outputs/apk/debug/app-debug.apk
-./gradlew installDebug       # 연결된 기기/에뮬레이터에 설치
+```bash
+(cd ../Backend && ./gradlew bootRun)   # 1) 백엔드 기동 (H2 인메모리, 시드 자동 생성)
+./gradlew installDebug               # 2) 연결된 기기/에뮬레이터에 설치
 ```
 
-시드 계정으로 바로 로그인할 수 있습니다 — 직원: `employee@ptmanager.test` / `password` (시드 매장 초대코드 `CAFE01`).
+Base URL은 `local.properties`(커밋 제외)의 `base.url`을 빌드 시 `BuildConfig.BASE_URL`로 주입한다. 없으면 기본값으로 폴백.
+
+```properties
+base.url=http://10.0.2.2:8080/   # 에뮬레이터 → 호스트 PC의 localhost
+```
+
+HTTP는 디버그 빌드에서만 허용되고 릴리스는 HTTPS가 아니면 기동하지 않는다. FCM을 쓰려면 `app/google-services.json`을 로컬에 두되 커밋하지 않는다.
+
+시드 계정으로 바로 로그인 — `employee@ptmanager.test` / `password` (매장 초대코드 `CAFE01`).

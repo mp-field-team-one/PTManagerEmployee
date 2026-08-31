@@ -70,7 +70,7 @@
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:text=""
-                android:textColor="@color/brand_blue"
+                android:textColor="@color/brand"
                 android:textSize="11sp"
                 android:textStyle="bold" />
 
@@ -90,7 +90,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
                 android:text=""
-                android:textColor="@color/text_hint"
+                android:textColor="@color/text_tertiary"
                 android:textSize="12sp" />
 
             <View
